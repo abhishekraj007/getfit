@@ -3,9 +3,11 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import React, { useEffect, useLayoutEffect } from 'react'
 import { Appearance } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
-import { storage } from '../kv'
+// import { storage } from '../kv'
 import { ThemeVariant } from 'app/utils/theme'
 import { appThemeKey, useAppTheme, useCurrentTheme } from 'app/atoms/theme'
+import { TamaguiProvider } from '../tamagui'
+// import { TamaguiProvider } from './tamagui'
 
 export const TamaguiThemeProvider = ({
   children,
@@ -30,31 +32,23 @@ export const TamaguiThemeProvider = ({
     }
   }, [])
 
-  useLayoutEffect(() => {
-    const savedAppTheme = storage.getString(appThemeKey)
-    if (savedAppTheme !== undefined) {
-      setAppTheme(savedAppTheme as ThemeVariant)
-    }
-  }, [])
-
   useEffect(() => {
+    console.log({ appTheme })
     if (appTheme === undefined) {
-      storage.set(appThemeKey, defaultTheme)
+      // storage.set(appThemeKey, defaultTheme)
       setAppTheme(defaultTheme)
     } else {
-      storage.set(appThemeKey, appTheme)
+      setAppTheme(appTheme)
+      // storage.set(appThemeKey, appTheme)
     }
   }, [appTheme])
 
   return (
     <ThemeProvider value={themeValue}>
-      <StatusBar style={statusBarStyle} />
-      {children}
+      <TamaguiProvider>
+        <StatusBar style={statusBarStyle} />
+        {children}
+      </TamaguiProvider>
     </ThemeProvider>
   )
-}
-
-export const useRootTheme = () => {
-  const [currentTheme] = useCurrentTheme()
-  return [currentTheme]
 }

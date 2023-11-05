@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "t4-app",
-    "slug": "t4-app",
+    "name": "Try new app",
+    "slug": "try",
     "scheme": "t4",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,21 +18,24 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.t4.app"
+      "bundleIdentifier": "com.t4.app.trymyapp",
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.t4.app"
+      "package": "com.t4.app.trymyapp"
     },
     "extra": {
       "eas": {
-        "projectId": "85fc6ccd-0ce1-4e4d-804c-b15df989f97e"
+        "projectId": "f78014ac-1a0e-4873-bbed-2021236b988d"
       }
     },
-    "owner": "timothymiller",
+    "owner": "akrj21896",
     "plugins": ["expo-router"],
     "experiments": {
       "tsconfigPaths": true,
