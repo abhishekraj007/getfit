@@ -1,4 +1,4 @@
-import { HomeScreen } from 'app/features/home/home-screen';
+import WorkoutPlay from 'app/features/workout-play';
 import { Stack } from 'expo-router';
 
 export default function Screen() {
@@ -6,11 +6,11 @@ export default function Screen() {
     <>
       <Stack.Screen
         options={{
-          title: 'Home',
+          title: 'Workout Play',
           headerShown: false,
         }}
       />
-      <HomeScreen />
+      <WorkoutPlay />
     </>
   );
 }

@@ -1,13 +1,13 @@
-import { HomeScreen } from 'app/features/home/home-screen';
+import WorkoutPlay from 'app/features/workout-play';
 import Head from 'next/head';
 
 export default function Page() {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>Workout Play</title>
       </Head>
-      <HomeScreen />
+      <WorkoutPlay />
     </>
   );
 }

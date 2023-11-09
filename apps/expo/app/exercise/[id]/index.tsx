@@ -1,4 +1,5 @@
-import { HomeScreen } from 'app/features/home/home-screen';
+import { View, Text } from '@t4/ui/src';
+import ExerciseDetail from 'app/features/exercise-detail';
 import { Stack } from 'expo-router';
 
 export default function Screen() {
@@ -6,11 +7,10 @@ export default function Screen() {
     <>
       <Stack.Screen
         options={{
-          title: 'Home',
-          headerShown: false,
+          title: 'Exercise Details',
         }}
       />
-      <HomeScreen />
+      <ExerciseDetail />
     </>
   );
 }

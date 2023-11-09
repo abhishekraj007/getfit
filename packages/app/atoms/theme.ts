@@ -1,34 +1,29 @@
 // import AsyncStorage from '@react-native-async-storage/async-storage'
-import { type CurrentThemeVariant, ThemeVariant } from 'app/utils/theme'
-import { atom, useAtom } from 'jotai'
-import { Appearance } from 'react-native'
-import { atomWithStorage, createJSONStorage } from 'jotai/utils'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { type CurrentThemeVariant, ThemeVariant } from 'app/utils/theme';
+import { atom, useAtom } from 'jotai';
+import { Appearance } from 'react-native';
+import { atomWithStorage, createJSONStorage } from 'jotai/utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const appThemeKey = 'appTheme'
+export const appThemeKey = 'appTheme';
 
-const storage = createJSONStorage<ThemeVariant>(() => AsyncStorage)
-export const appThemeAtom = atomWithStorage<ThemeVariant>(appThemeKey, ThemeVariant.light, storage)
-
-// console.log({ appThemeAtom })
-
-// const appThemeAtom = atomWithStorage<ThemeVariant>(appThemeKey, ThemeVariant.light)
+const storage = createJSONStorage<ThemeVariant>(() => AsyncStorage);
+export const appThemeAtom = atomWithStorage<ThemeVariant>(appThemeKey, ThemeVariant.light, storage);
 
 export function useAppTheme() {
-  const [appTheme, setAppTheme] = useAtom(appThemeAtom)
+  const [appTheme, setAppTheme] = useAtom(appThemeAtom);
 
-  return [appTheme, setAppTheme] as const
+  return [appTheme, setAppTheme] as const;
 }
 
-// @ts-ignore
-const currentThemeAtom = atom<CurrentThemeVariant>((get) => {
-  const userTheme = get(appThemeAtom)
+const currentThemeAtom = atom((get) => {
+  const userTheme = get(appThemeAtom);
   if (userTheme === ThemeVariant.system) {
-    return Appearance.getColorScheme() as CurrentThemeVariant
+    return Appearance.getColorScheme() as CurrentThemeVariant;
   }
-  return userTheme
-})
+  return userTheme;
+});
 
 export function useCurrentTheme() {
-  return [...useAtom(currentThemeAtom)] as const
+  return [...useAtom(currentThemeAtom)] as const;
 }

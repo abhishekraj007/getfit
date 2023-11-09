@@ -1,3 +1,2 @@
-import useBored from './useBored'
-
-export { useBored }
+export * from './useParam';
+export * from './useAppData';

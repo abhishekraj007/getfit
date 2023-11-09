@@ -1,13 +1,13 @@
-import { HomeScreen } from 'app/features/home/home-screen';
+import ExerciseDetail from 'app/features/exercise-detail';
 import Head from 'next/head';
 
 export default function Page() {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>Exercise detail</title>
       </Head>
-      <HomeScreen />
+      <ExerciseDetail />
     </>
   );
 }

@@ -3,6 +3,7 @@
     "strictNullChecks": true,
     "noUncheckedIndexedAccess": true,
     "paths": {
+      "@t4/store/*": ["./packages/store/*"],
       "app/*": ["./packages/app/*"],
       "@t4/api/*": ["./packages/api/*"],
       "@t4/ui/*": ["./packages/ui/*"]

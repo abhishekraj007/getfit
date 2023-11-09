@@ -1,28 +1,28 @@
-import React from 'react'
-import { Platform } from 'react-native'
-import AnimatedButton from './AnimatedButton'
-import { useAppTheme } from 'app/atoms/theme'
-import { useThemeSetting } from '@tamagui/next-theme'
-import { ThemeVariant } from 'app/utils/theme'
-import { Moon } from '@tamagui/lucide-icons'
+import React from 'react';
+import { Platform } from 'react-native';
+import AnimatedButton from './AnimatedButton';
+import { useAppTheme } from 'app/atoms/theme';
+import { useThemeSetting } from '@tamagui/next-theme';
+import { ThemeVariant } from 'app/utils/theme';
+import { Moon } from '@tamagui/lucide-icons';
 
-export default function ThemeToggle() {
-  const [theme, setNativeTheme] = useAppTheme()
-  const { set: setWebTheme } = useThemeSetting()
+export function ThemeToggle() {
+  const [theme, setNativeTheme] = useAppTheme();
+  const { set: setWebTheme } = useThemeSetting();
 
   const onThemeToggle = () => {
-    const webPlatform = Platform.OS === 'web'
-    const nextTheme = theme === ThemeVariant.dark ? ThemeVariant.light : ThemeVariant.dark
+    const webPlatform = Platform.OS === 'web';
+    const nextTheme = theme === ThemeVariant.dark ? ThemeVariant.light : ThemeVariant.dark;
     if (webPlatform) {
-      setWebTheme(nextTheme)
+      setWebTheme(nextTheme);
     } else {
-      setNativeTheme(nextTheme)
+      setNativeTheme(nextTheme);
     }
-  }
+  };
 
   return (
     <AnimatedButton onClick={onThemeToggle}>
       <Moon size={'$1'} />
     </AnimatedButton>
-  )
+  );
 }

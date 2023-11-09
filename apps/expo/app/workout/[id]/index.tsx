@@ -1,16 +1,16 @@
-import { HomeScreen } from 'app/features/home/home-screen';
+import WorkoutDetail from 'app/features/workout-detail';
 import { Stack } from 'expo-router';
 
-export default function Screen() {
+export default function Page() {
   return (
     <>
       <Stack.Screen
         options={{
-          title: 'Home',
+          title: 'Workout details',
           headerShown: false,
         }}
       />
-      <HomeScreen />
+      <WorkoutDetail />
     </>
   );
 }

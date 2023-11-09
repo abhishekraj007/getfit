@@ -1,11 +1,9 @@
-import config from '../../tamagui.config'
-import { TamaguiProvider as TamaguiProviderOG } from '@t4/ui'
-import { useAppTheme } from 'app/atoms/theme'
+import config from '../../tamagui.config';
+import { TamaguiProvider as TamaguiProviderOG } from '@t4/ui';
+import { useAppTheme } from 'app/atoms/theme';
 
 export const TamaguiProvider = ({ children }: { children: React.ReactNode }): React.ReactNode => {
-  const [currentTheme] = useAppTheme()
-
-  console.log({ currentTheme })
+  const [currentTheme] = useAppTheme();
 
   return (
     <TamaguiProviderOG
@@ -16,5 +14,5 @@ export const TamaguiProvider = ({ children }: { children: React.ReactNode }): Re
     >
       {children}
     </TamaguiProviderOG>
-  )
-}
+  );
+};

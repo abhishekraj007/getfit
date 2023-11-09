@@ -1,47 +1,47 @@
-import { useForceUpdate } from '@t4/ui'
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'
-import React, { useEffect, useLayoutEffect } from 'react'
-import { Appearance } from 'react-native'
-import { StatusBar } from 'expo-status-bar'
+import { useForceUpdate } from '@t4/ui';
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import React, { useEffect, useLayoutEffect } from 'react';
+import { Appearance } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 // import { storage } from '../kv'
-import { ThemeVariant } from 'app/utils/theme'
-import { appThemeKey, useAppTheme, useCurrentTheme } from 'app/atoms/theme'
-import { TamaguiProvider } from '../tamagui'
+import { ThemeVariant } from 'app/utils/theme';
+import { appThemeKey, useAppTheme, useCurrentTheme } from 'app/atoms/theme';
+import { TamaguiProvider } from '../tamagui';
 // import { TamaguiProvider } from './tamagui'
 
 export const TamaguiThemeProvider = ({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }): React.ReactNode => {
-  const [appTheme, setAppTheme] = useAppTheme()
-  const [currentTheme] = useCurrentTheme()
-  const forceUpdate = useForceUpdate()
+  const [appTheme, setAppTheme] = useAppTheme();
+  const [currentTheme] = useCurrentTheme();
+  const forceUpdate = useForceUpdate();
 
-  const defaultTheme = 'system'
-  const statusBarStyle = currentTheme === ThemeVariant.dark ? ThemeVariant.light : ThemeVariant.dark
-  const themeValue = currentTheme === ThemeVariant.dark ? DarkTheme : DefaultTheme
+  const defaultTheme = 'system';
+  const statusBarStyle =
+    currentTheme === ThemeVariant.dark ? ThemeVariant.light : ThemeVariant.dark;
+  const themeValue = currentTheme === ThemeVariant.dark ? DarkTheme : DefaultTheme;
 
   useEffect(() => {
     const systemThemeChangeListener = Appearance.addChangeListener(() => {
-      setAppTheme(Appearance.getColorScheme() as ThemeVariant)
-      forceUpdate()
-    })
+      setAppTheme(Appearance.getColorScheme() as ThemeVariant);
+      forceUpdate();
+    });
     return () => {
-      systemThemeChangeListener.remove()
-    }
-  }, [])
+      systemThemeChangeListener.remove();
+    };
+  }, []);
 
   useEffect(() => {
-    console.log({ appTheme })
     if (appTheme === undefined) {
       // storage.set(appThemeKey, defaultTheme)
-      setAppTheme(defaultTheme)
+      setAppTheme(defaultTheme);
     } else {
-      setAppTheme(appTheme)
+      setAppTheme(appTheme);
       // storage.set(appThemeKey, appTheme)
     }
-  }, [appTheme])
+  }, [appTheme]);
 
   return (
     <ThemeProvider value={themeValue}>
@@ -50,5 +50,5 @@ export const TamaguiThemeProvider = ({
         {children}
       </TamaguiProvider>
     </ThemeProvider>
-  )
-}
+  );
+};
