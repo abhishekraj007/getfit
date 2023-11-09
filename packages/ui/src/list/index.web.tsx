@@ -1,58 +1,94 @@
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useVirtualizer } from '@tanstack/react-virtual'
-import { useRef } from 'react'
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useVirtualizer } from '@tanstack/react-virtual';
+import { useRef } from 'react';
+import { YStack } from 'tamagui';
 
 interface Props {
-  data: any[]
-  renderItem: (item: any) => React.ReactNode
-  itemHeight: number
+  data: any[];
+  renderItem: (item: any) => React.ReactNode;
+  itemHeight: number;
+  horizontal?: boolean;
 }
 
-export const VirtualList = ({ data, renderItem, itemHeight }: Props): React.ReactNode => {
-  const { top, bottom } = useSafeAreaInsets()
+export const VirtualList = ({
+  data,
+  renderItem,
+  itemHeight,
+  horizontal = true,
+}: Props): React.ReactNode => {
+  if (horizontal) {
+    return <CardSlider data={data} renderItem={renderItem} />;
+  }
 
-  const parentRef = useRef()
+  const { top, bottom } = useSafeAreaInsets();
+
+  const parentRef = useRef();
   const rowVirtualizer = useVirtualizer({
     count: data.length,
     getScrollElement: () => parentRef.current as any,
     estimateSize: () => itemHeight,
-  })
+  });
 
   return (
+    <YStack>
+      {data.map((item) => {
+        return <div>{renderItem(item)}</div>;
+      })}
+    </YStack>
+  );
+
+  // return (
+  //   <div
+  //     ref={parentRef as any}
+  //     style={{
+  //       paddingTop: top,
+  //       paddingBottom: bottom,
+  //       height: `100%`,
+  //       // overflow: 'auto', // Make it scroll!
+  //     }}
+  //   >
+  //     {/* The large inner element to hold all of the items */}
+  //     <div
+  //       style={{
+  //         height: `${rowVirtualizer.getTotalSize()}px`,
+  //         width: '100%',
+  //         position: 'relative',
+  //       }}
+  //     >
+  //       {/* Only the visible items in the virtualizer, manually positioned to be in view */}
+  //       {rowVirtualizer.getVirtualItems().map((virtualItem) => (
+  //         <div
+  //           key={virtualItem.key}
+  //           style={{
+  //             position: 'absolute',
+  //             top: 0,
+  //             left: 0,
+  //             width: '100%',
+  //             height: `${virtualItem.size}px`,
+  //             transform: `translateY(${virtualItem.start}px)`,
+  //           }}
+  //         >
+  //           {renderItem(data[virtualItem.index])}
+  //         </div>
+  //       ))}
+  //     </div>
+  //   </div>
+  // );
+};
+
+const CardSlider = ({ data, renderItem }) => {
+  return (
     <div
-      ref={parentRef as any}
       style={{
-        paddingTop: top,
-        paddingBottom: bottom,
-        height: `100%`,
-        overflow: 'auto', // Make it scroll!
+        display: 'flex',
+        overflowX: 'scroll',
+        overflowY: 'hidden',
+        scrollbarWidth: 'none' /* For Firefox */,
+        msOverflowStyle: 'none' /* For Internet Explorer and Edge */,
+        // backgroundColor: 'yellow',
       }}
     >
-      {/* The large inner element to hold all of the items */}
-      <div
-        style={{
-          height: `${rowVirtualizer.getTotalSize()}px`,
-          width: '100%',
-          position: 'relative',
-        }}
-      >
-        {/* Only the visible items in the virtualizer, manually positioned to be in view */}
-        {rowVirtualizer.getVirtualItems().map((virtualItem) => (
-          <div
-            key={virtualItem.key}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: `${virtualItem.size}px`,
-              transform: `translateY(${virtualItem.start}px)`,
-            }}
-          >
-            {renderItem(data[virtualItem.index])}
-          </div>
-        ))}
-      </div>
+      {data.map((item, index) => renderItem(item, index))}
     </div>
-  )
-}
+  );
+};
