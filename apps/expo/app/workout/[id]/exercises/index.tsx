@@ -1,4 +1,4 @@
-import WorkoutExercises from 'app/features/workout-exercises';
+import WorkoutExercises from 'app/screens/workout-exercises';
 import { Stack } from 'expo-router';
 
 export default function Page() {

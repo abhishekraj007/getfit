@@ -1,4 +1,4 @@
-import WorkoutDetail from 'app/features/workout-detail';
+import WorkoutDetail from 'app/screens/workout-detail';
 import { Stack } from 'expo-router';
 
 export default function Page() {

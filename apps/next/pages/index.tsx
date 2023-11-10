@@ -1,4 +1,4 @@
-import { HomeScreen } from 'app/features/home/home-screen';
+import { HomeScreen } from 'app/screens/home/home-screen';
 import Head from 'next/head';
 
 export default function Page() {

@@ -1,4 +1,4 @@
-import ExerciseDetail from 'app/features/exercise-detail';
+import ExerciseDetail from 'app/screens/exercise-detail';
 import Head from 'next/head';
 
 export default function Page() {

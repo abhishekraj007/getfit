@@ -1,5 +1,5 @@
 import { View, Text } from '@t4/ui/src';
-import ExerciseDetail from 'app/features/exercise-detail';
+import ExerciseDetail from 'app/screens/exercise-detail';
 import { Stack } from 'expo-router';
 
 export default function Screen() {

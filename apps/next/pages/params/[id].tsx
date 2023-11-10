@@ -1,5 +1,5 @@
-import { ParamsScreen } from 'app/features/params/screen'
-import Head from 'next/head'
+import { ParamsScreen } from 'app/screens/params/screen';
+import Head from 'next/head';
 
 export default function Page() {
   return (
@@ -9,5 +9,5 @@ export default function Page() {
       </Head>
       <ParamsScreen />
     </>
-  )
+  );
 }

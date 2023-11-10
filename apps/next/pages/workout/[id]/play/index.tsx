@@ -1,4 +1,4 @@
-import WorkoutPlay from 'app/features/workout-play';
+import WorkoutPlay from 'app/screens/workout-play';
 import Head from 'next/head';
 
 export default function Page() {

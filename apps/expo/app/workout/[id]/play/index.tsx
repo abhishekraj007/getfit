@@ -1,4 +1,4 @@
-import WorkoutPlay from 'app/features/workout-play';
+import WorkoutPlay from 'app/screens/workout-play';
 import { Stack } from 'expo-router';
 
 export default function Screen() {
