@@ -13,11 +13,11 @@ import {
 } from '@t4/ui/src';
 import LevelRate from '@t4/ui/src/LevelRate';
 import { useRouter } from 'solito/router';
-import { useWorkouts } from 'app/stores';
+import { useAllWorkouts } from 'app/stores';
 import { IWorkout } from '@t4/ui/src/modals';
 
 export function LatestWorkouts() {
-  const [workouts] = useWorkouts();
+  const [workouts] = useAllWorkouts();
   const { hasLoaded, data } = workouts;
   const { push } = useRouter();
 

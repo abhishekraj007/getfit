@@ -1,10 +1,5 @@
-import { FlashList, FlashListProps } from '@shopify/flash-list';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useCallback } from 'react';
-import { Spinner, YStack, View } from 'tamagui';
-import { DocumentData } from 'firebase/firestore';
 import { FlatList } from 'react-native';
-import { IListData } from '../modals';
 
 interface Props<T> {
   data: T[];

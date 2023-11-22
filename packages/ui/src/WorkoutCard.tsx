@@ -1,20 +1,24 @@
 import { Card, Paragraph, YStack, Image, H4, H6, H5 } from 'tamagui';
-import { IWorkout } from './modals';
+import { IChallenge, IWorkout } from './modals';
 import LevelRate from './LevelRate';
 import { ImageBackground } from './ImageBackground';
 import { LinearGradient } from '@tamagui/linear-gradient';
 
 interface WorkoutCardProps {
-  workout: IWorkout;
+  workout: IWorkout | IChallenge;
   onPress: () => void;
   isLast?: boolean;
 }
-const CARD_GRADIENT_COLOR = ['rgba(0,0,0,0.6)', 'rgba(0,0,0,0.5)'];
+const CARD_GRADIENT_COLOR = ['rgba(0,0,0,0.2)', 'rgba(0,0,0,0.1)'];
 
 export function WorkoutCard({ workout, onPress, isLast = false }: WorkoutCardProps) {
   const CARD_WIDTH = 220;
   const CARD_HEIGHT = 140;
   const RADIUS = 8;
+
+  console.log({ workout });
+
+  const { isChallenge, name, duration } = workout;
 
   return (
     <Card
@@ -38,7 +42,7 @@ export function WorkoutCard({ workout, onPress, isLast = false }: WorkoutCardPro
       borderRadius={RADIUS}
     >
       <ImageBackground
-        source={{ uri: workout.image }}
+        source={{ uri: workout.image ?? '' }}
         resizeMode={'cover'}
         width={CARD_WIDTH}
         height={CARD_HEIGHT}
@@ -50,14 +54,13 @@ export function WorkoutCard({ workout, onPress, isLast = false }: WorkoutCardPro
           colors={CARD_GRADIENT_COLOR}
           borderRadius={8}
         >
-          <Card.Header padded>{/* <LevelRate rate={workout.rate} /> */}</Card.Header>
-          <Card.Footer padded>
+          <Card.Footer padded paddingBottom={14}>
             <YStack>
               <Paragraph fontSize={12} color={'$color.gray5Light'}>
-                {workout.duration}
+                {isChallenge ? '7 X 4 Challenge' : duration}
               </Paragraph>
               <H5 fontWeight={'bold'} fontSize={13} color={'white'}>
-                {workout.title}
+                {name}
               </H5>
             </YStack>
           </Card.Footer>

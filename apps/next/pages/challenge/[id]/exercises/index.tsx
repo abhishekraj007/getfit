@@ -1,4 +1,4 @@
-import WorkoutExercises from 'app/screens/workout-exercises';
+import ChallengeExercises from 'app/screens/challenge-exercises';
 import Head from 'next/head';
 
 export default function Page() {
@@ -7,7 +7,7 @@ export default function Page() {
       <Head>
         <title>Exercise detail</title>
       </Head>
-      <WorkoutExercises />
+      <ChallengeExercises />
     </>
   );
 }

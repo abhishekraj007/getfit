@@ -1,5 +1,10 @@
 import { createParam } from 'solito';
 
-const { useParam } = createParam<{ id: string }>();
+type Params = {
+  id: string;
+  day?: number;
+};
+
+const { useParam } = createParam<Params>();
 
 export { useParam };

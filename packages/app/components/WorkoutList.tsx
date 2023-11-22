@@ -1,18 +1,20 @@
 import React from 'react';
 import { H5, ScrollView, Spinner, WorkoutCard, YStack } from '@t4/ui/src';
 import { useRouter } from 'solito/router';
-import { IWorkout } from '@t4/ui/src/modals';
+import { IChallenge, IWorkout } from '@t4/ui/src/modals';
 
 interface WorkoutListProps {
   title: string;
-  data: IWorkout[];
+  data: IWorkout[] | IChallenge[] | undefined;
   isLoading?: boolean;
 }
 
 export function WorkoutList({ data, title, isLoading }: WorkoutListProps) {
   const { push } = useRouter();
 
-  if (isLoading) {
+  console.log({ data });
+
+  if (isLoading || !data) {
     return <Spinner />;
   }
 
@@ -33,7 +35,7 @@ export function WorkoutList({ data, title, isLoading }: WorkoutListProps) {
               isLast={data.length - 1 === index}
               workout={item}
               onPress={() => {
-                push(`/workout/${item.id}`);
+                push(`/${item.isChallenge ? 'challenge' : 'workout'}/${item.id}`);
               }}
             />
           );

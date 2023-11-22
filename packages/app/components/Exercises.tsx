@@ -1,36 +1,27 @@
-import { useExercises } from 'app/stores';
 import { IExercise } from '@t4/ui/src/modals';
 import { SolitoImage } from 'solito/image';
-import { Link } from 'solito/link';
 import {
   YStack,
-  VirtualList,
   Card,
   Paragraph,
-  Spinner,
-  H6,
   XStack,
   View,
-  Text,
   H5,
   useThemeName,
-  Theme,
   useWindowDimensions,
   Button,
   ScrollView,
 } from '@t4/ui/src';
-import { Play } from '@tamagui/lucide-icons';
-import { useRouter } from 'solito/router';
+import { LIST_MISSING_IMAGE } from 'app/constants/images';
+import { useColors } from 'app/hooks';
 
 function ECard({ item }: { item: IExercise }) {
-  const themeName = useThemeName();
-  const backgroundColor = themeName.includes('dark') ? '$background' : 'white';
   const { width } = useWindowDimensions();
+  const { backgroundColor, textPrimary, textSecondary } = useColors();
 
   return (
     <Card
-      size="$4"
-      bordered
+      borderWidth={0}
       borderRadius={0}
       animation="bouncy"
       width={width}
@@ -39,69 +30,50 @@ function ECard({ item }: { item: IExercise }) {
       exitStyle={{ scale: 1, opacity: 1 }}
       backgroundColor={backgroundColor}
     >
-      <XStack alignItems="center" paddingRight="$4">
-        <View alignItems="center">
-          <SolitoImage src={item.image} width={50} height={50} alt={item.title} unoptimized />
-        </View>
+      <XStack alignItems="center">
+        <SolitoImage
+          src={item?.image ?? LIST_MISSING_IMAGE}
+          width={50}
+          height={50}
+          alt={item.title}
+          unoptimized
+        />
 
-        <Card.Header width={'100%'}>
-          <H5>{item.title}</H5>
-          <Paragraph theme="alt1">X {item.reps}</Paragraph>
-        </Card.Header>
+        <YStack paddingVertical={'$3'} paddingHorizontal={'$4'}>
+          <H5 color={textPrimary}>{item.title}</H5>
+          {item.reps_unit === 'rep' ? (
+            <Paragraph color={textSecondary}>X {item.reps_value}</Paragraph>
+          ) : (
+            <Paragraph color={textSecondary}>00:{item.reps_value}</Paragraph>
+          )}
+        </YStack>
       </XStack>
     </Card>
   );
 }
 
-export function Exercises({ workoutId }: { workoutId: string }) {
-  const [exercises] = useExercises();
-  const { data, loading } = exercises;
-
-  const { push } = useRouter();
-
-  if (loading) {
-    return (
-      <YStack padding="$3" space="$4" alignItems="center">
-        <Spinner size="small" color="$green10" />
-      </YStack>
-    );
-  }
+export function Exercises({ exercises, onStart }: { exercises: IExercise[]; onStart }) {
+  const { height } = useWindowDimensions();
 
   return (
-    <YStack>
-      <ScrollView>
-        <VirtualList
-          data={data}
-          renderItem={(item) => {
-            return <ECard item={item} />;
-          }}
-          itemHeight={100}
-          horizontal={false}
-        />
-        <VirtualList
-          data={data}
-          renderItem={(item) => {
-            return <ECard item={item} />;
-          }}
-          itemHeight={100}
-          horizontal={false}
-        />
+    <YStack position="relative">
+      <ScrollView showsVerticalScrollIndicator={false} height={height - 420}>
+        {exercises.map((item) => (
+          <ECard item={item} />
+        ))}
       </ScrollView>
 
-      <XStack justifyContent="center" marginTop={'$8'} borderRadius={'$5'}>
+      <XStack position="relative" justifyContent="center" marginTop={-60} borderRadius={'$5'}>
         <Button
-          size="$5"
-          icon={Play}
+          size="$6"
           themeInverse
-          theme={'pink'}
-          width={200}
+          width={280}
           animation="bouncy"
           pressStyle={{ scale: 0.96, opacity: 0.9 }}
-          onPress={() => {
-            push(`/workout/${workoutId}/play`);
-          }}
+          onPress={onStart}
+          borderRadius={50}
         >
-          Start
+          Let's Go
         </Button>
       </XStack>
     </YStack>

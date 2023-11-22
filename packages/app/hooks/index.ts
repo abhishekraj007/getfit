@@ -1,2 +1,3 @@
 export * from './useParam';
-export * from './useAppData';
+export * from './useData';
+export * from './useColors';

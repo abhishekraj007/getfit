@@ -1,7 +1,7 @@
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { useRef } from 'react';
-import { YStack } from 'tamagui';
+import { ScrollView } from 'tamagui';
 
 interface Props {
   data: any[];
@@ -30,11 +30,11 @@ export const VirtualList = ({
   });
 
   return (
-    <YStack>
+    <ScrollView>
       {data.map((item) => {
-        return <div>{renderItem(item)}</div>;
+        return <div key={item?.id}>{renderItem(item)}</div>;
       })}
-    </YStack>
+    </ScrollView>
   );
 
   // return (

@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight } from '@tamagui/lucide-icons';
 import { useState } from 'react';
 import { Button, Image, XStack, YStack, styled, useWindowDimensions } from 'tamagui';
 import { WhitePage } from './Page';
+import { IExercise, IList, IListData } from './modals';
 
 const YStackEnterable = styled(YStack, {
   variants: {
@@ -12,61 +13,52 @@ const YStackEnterable = styled(YStack, {
   } as const,
 });
 
-export function PageSlider({ data, renderItem }) {
+interface RenderItemProps {
+  item: IExercise;
+  pageNumber: number;
+  onNext: () => void;
+  onPrev: () => void;
+}
+
+interface PageSliderProps {
+  data: IExercise[];
+  renderItem: ({}: RenderItemProps) => React.ReactNode;
+  // onNext: () => void;
+  // onPrev: () => void;
+}
+
+export function PageSlider({ data, renderItem }: PageSliderProps) {
   const [[page, direction], setPage] = useState([0, 0]);
-  const pageSize = data.length;
+  const pageSize = data?.length;
 
   const sliderIndex = wrap(0, pageSize, page);
-  const paginate = (newDirection: number) => {
+  const paginate = (newDirection: number): void => {
     setPage([page + newDirection, newDirection]);
   };
-
-  const { height } = useWindowDimensions();
 
   const enterVariant = direction === 1 || direction === 0 ? 'isRight' : 'isLeft';
 
   const exitVariant = direction === 1 ? 'isLeft' : 'isRight';
-  const BOTTOM_SHEET_HEIGHT = 140;
-  const backButtonDisabled = sliderIndex === 0;
-  const nextButtonDisabled = sliderIndex === pageSize - 1;
 
   return (
-    <WhitePage overflow="hidden" position="relative" width="100%" alignItems="center">
-      <YStack height={height - BOTTOM_SHEET_HEIGHT}>
-        <AnimatePresence enterVariant={enterVariant} exitVariant={exitVariant}>
-          <YStackEnterable
-            key={page}
-            animation="bouncy"
-            fullscreen
-            x={0}
-            opacity={1}
-            alignItems="center"
-          >
-            {renderItem(data[sliderIndex])}
-          </YStackEnterable>
-        </AnimatePresence>
-      </YStack>
-      <XStack height={BOTTOM_SHEET_HEIGHT} justifyContent="space-between" padding="$4">
-        <Button
-          accessibilityLabel="Carousel left"
-          icon={ArrowLeft}
-          size="$6"
-          circular
-          onPress={() => paginate(-1)}
-          disabled={backButtonDisabled}
-          color={`${backButtonDisabled ? '$color.gray10Light' : ''}`}
-        />
-
-        <Button
-          accessibilityLabel="Carousel right"
-          icon={ArrowRight}
-          size="$6"
-          circular
-          onPress={() => paginate(1)}
-          disabled={nextButtonDisabled}
-          color={`${nextButtonDisabled ? '$color.gray10Light' : ''}`}
-        />
-      </XStack>
+    <WhitePage overflow="hidden" position="relative" alignItems="center">
+      <AnimatePresence enterVariant={enterVariant} exitVariant={exitVariant}>
+        <YStackEnterable
+          key={page}
+          animation="bouncy"
+          fullscreen
+          x={0}
+          opacity={1}
+          alignItems="center"
+        >
+          {renderItem({
+            item: data[sliderIndex],
+            pageNumber: sliderIndex,
+            onNext: () => paginate(1),
+            onPrev: () => paginate(-1),
+          })}
+        </YStackEnterable>
+      </AnimatePresence>
     </WhitePage>
   );
 }

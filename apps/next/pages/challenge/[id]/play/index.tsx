@@ -1,13 +1,13 @@
-import ExerciseDetail from 'app/screens/exercise-detail';
+import ChallengePlay from 'app/screens/challenge-play';
 import Head from 'next/head';
 
 export default function Page() {
   return (
     <>
       <Head>
-        <title>Exercise detail</title>
+        <title>Challenge Play</title>
       </Head>
-      <ExerciseDetail />
+      <ChallengePlay />
     </>
   );
 }

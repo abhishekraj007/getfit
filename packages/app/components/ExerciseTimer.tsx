@@ -1,51 +1,63 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
-  VirtualList,
   XStack,
   Text,
-  Card,
   H5,
   H6,
   H4,
   useWindowDimensions,
   Button,
   Image,
-  H2,
   YStack,
-  H3,
   useThemeName,
+  ImageBackground,
 } from '@t4/ui/src';
 import { useRouter } from 'solito/router';
-import { Pause, Play } from '@tamagui/lucide-icons';
+import { CheckCircle, Pause, Play } from '@tamagui/lucide-icons';
 import { IExercise } from '@t4/ui/src/modals';
+import { SolitoImage } from 'solito/image';
+import { HEADER_HEIGHT_WITHOUT_IMAGE } from 'app/constants';
+import { WhitePage } from '@t4/ui/src/Page';
 // import { ResizeMode, Video } from 'expo-av';
 
 export interface ExerciseTimerProps {
-  data: IExercise;
+  exercise: IExercise;
   stop: boolean;
   currentPage: number;
   lastPage: number;
-  workoutId: string;
   totalItems: number;
+  leftButton?: React.ReactNode;
+  rightButton?: React.ReactNode;
 }
 
 export function ExerciseTimer(props: ExerciseTimerProps) {
-  const { data, stop, currentPage, lastPage, workoutId, totalItems } = props;
+  const { exercise, stop, currentPage, lastPage, leftButton, rightButton } = props;
 
   const { push } = useRouter();
   const { width, height } = useWindowDimensions();
+  const {
+    image,
+    sets = 2,
+    title,
+    reps_unit = 'rep',
+    reps_value = 3,
+    rest_unit = 'sec',
+    rest_value = 60,
+  } = exercise || {};
+
+  const restTime = (rest_unit === 'sec' ? rest_value : rest_value * 60) || 60;
+  const shouldShowRepsInSec = reps_unit !== 'rep';
 
   const refVideo2 = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [nextSet, setnextSet] = useState(false);
   const [finished, setFinished] = useState(false);
   const [isEnd, setIsEnd] = useState(false);
-  const [reps, setReps] = useState(1);
-  const [sets, setSets] = useState(1);
-  const [rest, setRest] = useState(false);
-
-  const restTime = (data.rest.unit === 'sec' ? data.rest.time : data.rest.time * 60) || 60;
+  const [currentReps, setCurrentReps] = useState(1);
+  // const [currentReps, setCurrentReps] = useState(1);
+  const [currentSets, setCurrentSets] = useState(1);
+  const [shouldTakeRest, setShouldTakeRest] = useState(false);
 
   const [timeLeft, setTimeLeft] = useState(restTime);
   const [totaltime, setTotaltime] = useState({
@@ -53,10 +65,6 @@ export function ExerciseTimer(props: ExerciseTimerProps) {
     minutes: 0,
     hours: 0,
   });
-
-  // const contextState = useContext(LanguageContext);
-  // const language = contextState.language;
-  // const Strings = Languages[language].texts;
 
   const PlayPause = () => {
     setIsPlaying(!isPlaying);
@@ -89,7 +97,7 @@ export function ExerciseTimer(props: ExerciseTimerProps) {
       }, 1000);
     };
 
-    if (isPlaying || rest) {
+    if (isPlaying || shouldTakeRest) {
       advanceTime();
     }
 
@@ -106,8 +114,9 @@ export function ExerciseTimer(props: ExerciseTimerProps) {
     }
   }, [currentPage]);
 
+  // Rest
   useEffect(() => {
-    if (rest) {
+    if (shouldTakeRest) {
       if (!timeLeft) return;
 
       const intervalId = setInterval(() => {
@@ -116,11 +125,11 @@ export function ExerciseTimer(props: ExerciseTimerProps) {
 
       return () => clearInterval(intervalId);
     }
-  }, [rest, timeLeft]);
+  }, [shouldTakeRest, timeLeft]);
 
   useEffect(() => {
-    if (reps === data.reps) {
-      if (data.sets === sets) {
+    if (currentReps === reps_value) {
+      if (sets === currentSets) {
         if (isEnd) {
           setTimeout(() => {
             push('/completed');
@@ -137,39 +146,45 @@ export function ExerciseTimer(props: ExerciseTimerProps) {
         }
       } else {
         setTimeout(() => {
-          setRest(true);
+          setShouldTakeRest(true);
         }, 1000);
       }
     }
-  }, [reps]);
+  }, [currentReps]);
 
   useEffect(() => {
     if (timeLeft === 0) {
-      if (sets < data.sets) {
-        setSets(sets + 1);
-        setReps(1);
+      if (currentSets < sets) {
+        setCurrentSets(currentSets + 1);
+        setCurrentReps(1);
         setnextSet(true);
         setTimeLeft(60);
-        setRest(false);
+        setShouldTakeRest(false);
       }
     }
   }, [timeLeft]);
 
+  const repsTimeOutSeconds = 4000;
+
   useEffect(() => {
     if (isPlaying) {
-      if (!reps) return;
-      const intervalId = setInterval(() => {
-        if (reps < data.reps) {
-          setReps(reps + 1);
-        } else {
-          setnextSet(true);
-          setIsPlaying(false);
-        }
-      }, 2500);
+      if (!currentReps) return;
+      // This is when reps are not in secs
+      const intervalId = setInterval(
+        () => {
+          if (currentReps < reps_value) {
+            setCurrentReps(currentReps + 1);
+          } else {
+            setnextSet(true);
+            setIsPlaying(false);
+          }
+        },
+        shouldShowRepsInSec ? 1000 : repsTimeOutSeconds
+      );
 
       return () => clearInterval(intervalId);
     }
-  }, [reps, isPlaying]);
+  }, [currentReps, isPlaying]);
 
   useEffect(() => {
     if (stop === false) {
@@ -177,65 +192,75 @@ export function ExerciseTimer(props: ExerciseTimerProps) {
     }
   }, [stop]);
 
-  const renderButton = () => {
-    if (!nextSet && !rest) {
+  const renderPlayPauseButton = () => {
+    if ((!nextSet && !shouldTakeRest) || !shouldTakeRest) {
       return (
         <Button
           icon={isPlaying ? <Pause /> : <Play />}
           onPress={() => PlayPause()}
-          themeInverse
-          theme={'pink'}
-          size={100}
-        />
-      );
-    } else if (!rest) {
-      return (
-        <Button
-          icon={isPlaying ? <Pause /> : <Play />}
-          onPress={() => PlayPause()}
-          themeInverse
-          size={100}
-          theme={'pink'}
+          // themeInverse
+          size={80}
+          width={100}
+          height={100}
+          // theme={'pink'}
+          // circular
         />
       );
     }
   };
 
+  const renderBottomActions = () => {
+    return (
+      <XStack
+        width={width}
+        // backgroundColor={'red'}
+        alignItems="center"
+        justifyContent="space-between"
+        paddingBottom={20}
+      >
+        {leftButton}
+        {renderPlayPauseButton()}
+        {rightButton}
+      </XStack>
+    );
+  };
+
+  const PRIMARY_TEXT_SIZE = 65;
+  const SECONDARY_TEXT_SIZE = 30;
+
   const renderExerciseInProgress = () => {
-    if (!finished && !rest) {
+    if (!finished && !shouldTakeRest) {
       return (
         <YStack
           alignItems="center"
           // animation={'bouncy'}
           // animateOnly={['transform']}
         >
-          <Image
-            width={width}
-            height={300}
-            source={{
-              uri: data.image,
-            }}
-          ></Image>
-          <H4 marginTop={20}>{data.title}</H4>
+          <SolitoImage width={width} height={height - 420} src={image} alt="" unoptimized />
+          <H5 marginTop={24} fontWeight={'bold'}>
+            {title}
+          </H5>
           <XStack marginTop={20} marginBottom={20}>
             <YStack alignItems="center" marginRight="$8">
               <XStack alignItems="center">
-                <Text fontWeight={'bold'} fontSize={60}>
-                  {reps}
+                <Text fontWeight={'bold'} fontSize={PRIMARY_TEXT_SIZE}>
+                  {`${currentReps}${shouldShowRepsInSec ? '"' : ''}`}
                 </Text>
-                <Text fontSize={40}>/</Text>
-                <Text fontSize={40}>{data.reps}</Text>
+                <Text fontSize={SECONDARY_TEXT_SIZE}>/</Text>
+                <Text fontSize={SECONDARY_TEXT_SIZE}>{`${reps_value}${
+                  shouldShowRepsInSec ? '"' : ''
+                }`}</Text>
               </XStack>
-              <H5>Reps</H5>
+              <H5>{`${shouldShowRepsInSec ? 'Sec' : 'Reps'}`}</H5>
             </YStack>
 
             <YStack alignItems="center">
               <XStack alignItems="center">
-                <Text fontWeight={'bold'} fontSize={60}>
-                  {sets}
+                <Text fontWeight={'bold'} fontSize={PRIMARY_TEXT_SIZE}>
+                  {currentSets}
                 </Text>
-                <Text fontSize={40}>/</Text>
-                <Text fontSize={40}>{data.sets}</Text>
+                <Text fontSize={SECONDARY_TEXT_SIZE}>/</Text>
+                <Text fontSize={SECONDARY_TEXT_SIZE}>{sets}</Text>
               </XStack>
               <H5>Sets</H5>
             </YStack>
@@ -280,49 +305,31 @@ export function ExerciseTimer(props: ExerciseTimerProps) {
 
   const renderFinishedScreen = () => {
     return (
-      <View
+      <YStack
         animation="slideInDown"
-        style={{
-          maxWidth: 300,
-          height: height,
-          flex: 1,
-          alignContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'row',
-        }}
+        height={height}
+        alignItems="center"
+        justifyContent="center"
+        space="$3"
+        marginTop={-80}
       >
-        <View
-          style={{
-            flexDirection: 'column',
-            alignItems: 'center',
-            marginTop: -70,
-          }}
-        >
-          {/* <Icon
-              name="checkbox-marked-circle-outline"
-              style={{
-                color: ColorsApp.PRIMARY,
-                fontSize: 72,
-                marginBottom: 10,
-              }}
-            /> */}
-          <Text style={{ fontSize: 34, fontWeight: 'bold', textAlign: 'center' }}>
-            Exercise Completed
-          </Text>
-        </View>
-      </View>
+        <CheckCircle />
+        <Text style={{ fontSize: 34, fontWeight: 'bold', textAlign: 'center' }}>
+          Exercise Completed
+        </Text>
+      </YStack>
     );
   };
 
-  const showExerciseInProgress = !rest && !finished;
-  const showRest = rest && !finished;
+  const showExerciseInProgress = !shouldTakeRest && !finished;
+  const showRest = shouldTakeRest && !finished;
 
   return (
-    <YStack alignItems="center">
+    <YStack>
       {showExerciseInProgress && renderExerciseInProgress()}
       {showRest && renderRest()}
       {finished && renderFinishedScreen()}
-      {!finished && renderButton()}
+      {!finished && renderBottomActions()}
     </YStack>
   );
 }

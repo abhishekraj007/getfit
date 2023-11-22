@@ -1,8 +1,5 @@
 import React from 'react';
-import { useParam } from 'app/hooks';
-import { useWorkouts } from 'app/stores';
 import {
-  Spinner,
   useWindowDimensions,
   YStack,
   ImageBackground,
@@ -12,10 +9,10 @@ import {
   useThemeName,
 } from '@t4/ui/src';
 import { LinearGradient } from '@tamagui/linear-gradient';
-import useAppData from 'app/hooks/useAppData';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ArrowLeft } from '@tamagui/lucide-icons';
+import { ArrowLeft, ChevronLeft } from '@tamagui/lucide-icons';
 import { useRouter } from 'solito/router';
+import { HEADER_HEIGHT, HEADER_HEIGHT_WITHOUT_IMAGE } from 'app/constants';
 
 interface PageHeaderProps {
   image?: string;
@@ -25,36 +22,29 @@ interface PageHeaderProps {
 }
 
 export function PageHeader({ image, onBack, title, children }: PageHeaderProps) {
-  useAppData();
-  const [workoutId = ''] = useParam('id');
-  const [workouts] = useWorkouts();
-  const { flatData, hasLoaded } = workouts;
-  const workoutDetail = flatData?.[workoutId];
   const { width } = useWindowDimensions();
   const isThemeDark = useThemeName().includes('dark');
-
   const { back } = useRouter();
 
-  if (!hasLoaded || !workoutDetail) {
-    return <Spinner />;
-  }
-
   const backIconColor = image ? 'white' : isThemeDark ? 'white' : 'black';
+
   const headerBackgroundColor = image ? 'transparent' : isThemeDark ? 'transparent' : 'white';
-
-  console.log({ backIconColor });
-
-  const HEADER_HEIGHT = 300;
 
   const renderBackButton = () => {
     return (
       <YStack paddingHorizontal="$4" backgroundColor={headerBackgroundColor}>
-        <XStack alignItems="center">
+        <XStack paddingRight="$5" alignItems="center" height={HEADER_HEIGHT_WITHOUT_IMAGE}>
           <Button
             icon={<ArrowLeft size={'$1.5'} color={backIconColor} />}
+            // icon={<ChevronLeft size={'$2'} color={backIconColor} />}
             chromeless
-            onPress={back}
-            paddingVertical={'$4'}
+            onPress={() => {
+              if (!!onBack) {
+                onBack();
+              } else {
+                back();
+              }
+            }}
             unstyled
             marginRight={'$4'}
           />
@@ -75,7 +65,7 @@ export function PageHeader({ image, onBack, title, children }: PageHeaderProps) 
     <YStack>
       {image ? (
         <ImageBackground
-          source={{ uri: workoutDetail.image }}
+          source={{ uri: image }}
           resizeMode={'cover'}
           width={width}
           height={HEADER_HEIGHT}
