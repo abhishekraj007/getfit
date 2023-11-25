@@ -1,24 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { createParam } from 'solito';
-import {
-  useWindowDimensions,
-  Spinner,
-  View,
-  ScrollView,
-  PageSlider,
-  YStack,
-  AlertDialog,
-  Button,
-  XStack,
-  Text,
-} from '@t4/ui/src';
-import { useKeepAwake } from 'expo-keep-awake';
-import { BackHandler } from 'react-native';
+import { Spinner, PageSlider, Button, H5 } from '@t4/ui/src';
 import { useRouter } from 'solito/router';
 import { ExerciseTimer, ExitModal, PageHeader } from 'app/components';
 import { useExercisesByWorkoutId } from 'app/hooks';
-import { IExercise } from '@t4/ui/src/modals';
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from '@tamagui/lucide-icons';
+import { CheckCircle, ChevronLeft, ChevronRight } from '@tamagui/lucide-icons';
 import { WhitePage } from '@t4/ui/src/Page';
 
 const { useParam } = createParam<{ id: string }>();
@@ -27,7 +13,7 @@ export default function WorkoutPlay() {
   // useKeepAwake();
 
   const [workoutId = ''] = useParam('id');
-  const { back } = useRouter();
+  const { back, push } = useRouter();
   const { exercises, isLoading } = useExercisesByWorkoutId(workoutId);
 
   const [isPlaying, setIsPlaying] = useState(false);
@@ -56,22 +42,27 @@ export default function WorkoutPlay() {
   };
 
   const rightButton = (onNext, pageNumber) => {
-    const buttonDisabled = pageNumber === exercises.length - 1;
+    const isLastExercise = pageNumber === exercises.length - 1;
     return (
       <Button
         accessibilityLabel="Carousel left"
-        icon={ChevronRight}
-        size="$10"
-        // circular
+        iconAfter={isLastExercise ? CheckCircle : ChevronRight}
+        size={isLastExercise ? '$6' : '$10'}
         chromeless
         padding={'$3'}
         onPress={() => {
           setIsPlaying(false);
-          onNext();
+
+          if (isLastExercise) {
+            push(`/workout/${workoutId}/completed`);
+          } else {
+            onNext();
+          }
         }}
-        disabled={buttonDisabled}
-        color={`${buttonDisabled ? '$color.gray6Light' : ''}`}
-      />
+        color={`${isLastExercise ? '$color.green10Dark' : ''}`}
+      >
+        <H5 color={'$color.green10Dark'}>{isLastExercise ? 'Finish' : ''}</H5>
+      </Button>
     );
   };
 
@@ -93,7 +84,6 @@ export default function WorkoutPlay() {
     <WhitePage>
       <PageHeader
         onBack={() => {
-          console.log('bbooooo');
           setShowExitAlert(true);
         }}
       />
@@ -101,7 +91,7 @@ export default function WorkoutPlay() {
       {showExitAlert && (
         <ExitModal
           open={showExitAlert}
-          onConfirm={() => back()}
+          onConfirm={() => push(`/workout/${workoutId}`)}
           onCancel={() => setShowExitAlert(false)}
         />
       )}

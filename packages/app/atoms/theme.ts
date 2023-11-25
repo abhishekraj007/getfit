@@ -21,7 +21,7 @@ const currentThemeAtom = atom((get) => {
   if (userTheme === ThemeVariant.system) {
     return Appearance.getColorScheme() as CurrentThemeVariant;
   }
-  return userTheme;
+  return userTheme as CurrentThemeVariant;
 });
 
 export function useCurrentTheme() {

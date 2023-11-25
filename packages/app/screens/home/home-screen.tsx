@@ -1,13 +1,16 @@
 import React from 'react';
 import { XStack, YStack, H4 } from 'tamagui';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ScrollView, Spinner } from '@t4/ui/src';
+import { HomeLoader, ScrollView, Spinner, WorkoutLoader } from '@t4/ui/src';
 import { ThemeToggle, WorkoutList } from 'app/components';
 import { ListType } from '@t4/ui/src/modals';
 import { useSections } from 'app/hooks/useData';
+import { useCurrentTheme } from 'app/atoms/theme';
+import { APP_NAME } from 'app/constants';
 
 export function HomeScreen() {
   const { isLoading, sections } = useSections();
+  const [theme] = useCurrentTheme();
 
   return (
     <SafeAreaView>
@@ -18,12 +21,12 @@ export function HomeScreen() {
           justifyContent="space-between"
           paddingBottom={'$3'}
         >
-          <H4>App Name</H4>
+          <H4>{APP_NAME}</H4>
           <ThemeToggle />
         </XStack>
 
         {isLoading ? (
-          <Spinner />
+          <HomeLoader theme={theme} />
         ) : (
           <ScrollView showsVerticalScrollIndicator={false}>
             {sections?.map((section) => {

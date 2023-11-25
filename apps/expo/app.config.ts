@@ -1,7 +1,7 @@
-import { ConfigContext, ExpoConfig } from '@expo/config'
-import dotenv from 'dotenv'
+import { ConfigContext, ExpoConfig } from '@expo/config';
+import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
@@ -17,7 +17,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     typedRoutes: true,
   },
   platforms: ['ios', 'android'],
-  name: 'T4 App',
+  name: 'BEFIT',
   slug: 'try',
   updates: {
     url: 'https://u.expo.dev/85fc6ccd-0ce1-4e4d-804c-b15df989f97e',
@@ -25,4 +25,4 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   runtimeVersion: {
     policy: 'sdkVersion',
   },
-})
+});

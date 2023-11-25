@@ -3,6 +3,7 @@ import { IChallenge, IWorkout } from './modals';
 import LevelRate from './LevelRate';
 import { ImageBackground } from './ImageBackground';
 import { LinearGradient } from '@tamagui/linear-gradient';
+import { CARD_WORKOUT_HEIGHT, CARD_WORKOUT_RADIUS, CARD_WORKOUT_WIDTH } from './constant';
 
 interface WorkoutCardProps {
   workout: IWorkout | IChallenge;
@@ -12,20 +13,14 @@ interface WorkoutCardProps {
 const CARD_GRADIENT_COLOR = ['rgba(0,0,0,0.2)', 'rgba(0,0,0,0.1)'];
 
 export function WorkoutCard({ workout, onPress, isLast = false }: WorkoutCardProps) {
-  const CARD_WIDTH = 220;
-  const CARD_HEIGHT = 140;
-  const RADIUS = 8;
-
-  console.log({ workout });
-
   const { isChallenge, name, duration } = workout;
 
   return (
     <Card
       bordered
       animation="bouncy"
-      width={CARD_WIDTH}
-      height={CARD_HEIGHT}
+      width={CARD_WORKOUT_WIDTH}
+      height={CARD_WORKOUT_HEIGHT}
       // scale={0.95}
       hoverStyle={{ opacity: 0.9, scale: 0.99 }}
       pressStyle={{ opacity: 0.9, scale: 0.9 }}
@@ -39,18 +34,18 @@ export function WorkoutCard({ workout, onPress, isLast = false }: WorkoutCardPro
       }}
       onPress={onPress}
       marginRight={isLast ? 0 : 12}
-      borderRadius={RADIUS}
+      borderRadius={CARD_WORKOUT_RADIUS}
     >
       <ImageBackground
         source={{ uri: workout.image ?? '' }}
         resizeMode={'cover'}
-        width={CARD_WIDTH}
-        height={CARD_HEIGHT}
-        borderRadius={RADIUS}
+        width={CARD_WORKOUT_WIDTH}
+        height={CARD_WORKOUT_HEIGHT}
+        borderRadius={CARD_WORKOUT_RADIUS}
       >
         <LinearGradient
-          width={CARD_WIDTH}
-          height={CARD_HEIGHT}
+          width={CARD_WORKOUT_WIDTH}
+          height={CARD_WORKOUT_HEIGHT}
           colors={CARD_GRADIENT_COLOR}
           borderRadius={8}
         >

@@ -8,3 +8,4 @@ export * from './ImageBackground';
 export * from './dialogs/AlertDialog';
 export * from './PageSlider';
 export * from './WorkoutCard';
+export * from './Loader';

@@ -12,8 +12,6 @@ interface WorkoutListProps {
 export function WorkoutList({ data, title, isLoading }: WorkoutListProps) {
   const { push } = useRouter();
 
-  console.log({ data });
-
   if (isLoading || !data) {
     return <Spinner />;
   }
