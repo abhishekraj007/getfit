@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createParam } from 'solito';
 import { Spinner, PageSlider, Button, H5 } from '@t4/ui/src';
 import { useRouter } from 'solito/router';
 import { ExerciseTimer, ExitModal, PageHeader } from 'app/components';
 import { useExercisesByWorkoutId } from 'app/hooks';
 import { CheckCircle, ChevronLeft, ChevronRight } from '@tamagui/lucide-icons';
-import { WhitePage } from '@t4/ui/src/Page';
+import { WhitePage } from 'app/components/Page';
+import { BackHandler, Platform } from 'react-native';
 
 const { useParam } = createParam<{ id: string }>();
 
@@ -21,6 +22,22 @@ export default function WorkoutPlay() {
 
   const exercisesLength = exercises?.length || 0;
 
+  useEffect(() => {
+    if (Platform.OS !== 'web') {
+      const backAction = () => {
+        if (!showExitAlert) {
+          setShowExitAlert(true);
+          return true;
+        }
+        return false;
+      };
+
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+
+      return () => backHandler.remove();
+    }
+  }, []);
+
   const leftButton = (onPrev, pageNumber) => {
     const buttonDisabled = pageNumber === 0;
     return (
@@ -28,7 +45,6 @@ export default function WorkoutPlay() {
         accessibilityLabel="Carousel left"
         icon={ChevronLeft}
         size="$10"
-        // circular
         chromeless
         padding={'$3'}
         onPress={() => {

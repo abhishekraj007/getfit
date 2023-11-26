@@ -3,11 +3,11 @@ import { createParam } from 'solito';
 import { Button, YStack, XStack, ImageBackground, useWindowDimensions, H2 } from '@t4/ui/src';
 import { useRouter } from 'solito/router';
 import { Home, RotateCcw, X } from '@tamagui/lucide-icons';
-import { WhitePage } from '@t4/ui/src/Page';
 import { CONGRATULATION_IMAGE } from 'app/constants/images';
 
 import { LinearGradient } from '@tamagui/linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { WhitePage } from 'app/components/Page';
 
 const { useParam } = createParam<{ id: string }>();
 

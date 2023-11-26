@@ -1,11 +1,11 @@
 import React from 'react';
 import { useParam } from 'app/hooks';
 import { Spinner, YStack, H3 } from '@t4/ui/src';
-import { WhitePage } from '@t4/ui/src/Page';
 import { Exercises, PageHeader } from 'app/components';
 import { useAllChallenges, useAllExercises, useExercisesByChallengeId } from 'app/hooks/useData';
 import { IChallenge, IExercise } from '@t4/ui/src/modals';
 import { useRouter } from 'solito/router';
+import { WhitePage } from 'app/components/Page';
 
 export default function WorkoutExercises() {
   const [challengeId = ''] = useParam('id');

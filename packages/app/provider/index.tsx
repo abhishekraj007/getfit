@@ -5,6 +5,7 @@ import { SafeAreaProvider } from './safe-area';
 import { TamaguiThemeProvider } from './theme';
 import { SolitoImageProvider } from './solito-image';
 import { MyQueryClientProvider } from './react-query/indes';
+import { LanguageProvider } from './language';
 // import { Session } from '@supabase/supabase-js'
 // import { AuthProvider } from './auth'
 
@@ -18,16 +19,18 @@ export function Provider({
     <MyQueryClientProvider>
       <TamaguiThemeProvider>
         <SafeAreaProvider>
-          <SolitoImageProvider>
-            <ToastProvider swipeDirection="horizontal" duration={6000} native={['mobile']}>
-              {children}
-              {/* <AuthProvider initialSession={initialSession}> */}
-              {/* <TRPCProvider>{children}</TRPCProvider> */}
-              <CustomToast />
-              <ToastViewport />
-              {/* </AuthProvider> */}
-            </ToastProvider>
-          </SolitoImageProvider>
+          <LanguageProvider>
+            <SolitoImageProvider>
+              <ToastProvider swipeDirection="horizontal" duration={6000} native={['mobile']}>
+                {children}
+                {/* <AuthProvider initialSession={initialSession}> */}
+                {/* <TRPCProvider>{children}</TRPCProvider> */}
+                <CustomToast />
+                <ToastViewport />
+                {/* </AuthProvider> */}
+              </ToastProvider>
+            </SolitoImageProvider>
+          </LanguageProvider>
         </SafeAreaProvider>
       </TamaguiThemeProvider>
     </MyQueryClientProvider>

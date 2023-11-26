@@ -1,11 +1,14 @@
 import React from 'react';
 import { useColors, useParam } from 'app/hooks';
-import { Spinner, YStack, H3, Paragraph, XStack, H5, Card } from '@t4/ui/src';
+import { YStack, H3, Paragraph, XStack, Card, WorkoutDetailLoader } from '@t4/ui/src';
 import { Exercises, PageHeader } from 'app/components';
 import { useExercisesByWorkoutId } from 'app/hooks/useData';
 import { useRouter } from 'solito/router';
-import { WhitePage } from '@t4/ui/src/Page';
 import { PersonStanding, Timer } from '@tamagui/lucide-icons';
+import { useAppTheme } from 'app/atoms/theme';
+import { useLanguage } from 'app/provider/language';
+import { useWorktouAtom } from 'app/atoms/workouts';
+import { WhitePage } from 'app/components/Page';
 
 export default function WorkoutDetail() {
   const [workoutId = ''] = useParam('id');
@@ -13,13 +16,16 @@ export default function WorkoutDetail() {
   const { workoutDetail, exercises, isLoading } = useExercisesByWorkoutId(workoutId);
 
   const { backgroundColor, headerColor, paragraphColor } = useColors();
+  const [theme] = useAppTheme();
+  const { lang } = useLanguage();
+  const { updatedSelectedWorkout } = useWorktouAtom();
 
   return (
     <WhitePage userSelect="none">
-      <PageHeader image={workoutDetail?.image}></PageHeader>
+      <PageHeader image={workoutDetail?.image} onBack={() => push('/')} />
 
       {isLoading ? (
-        <Spinner />
+        <WorkoutDetailLoader theme={theme} />
       ) : (
         <YStack
           position="relative"
@@ -31,7 +37,7 @@ export default function WorkoutDetail() {
         >
           <YStack marginBottom={20}>
             <H3 numberOfLines={1} ellipsizeMode="tail" color={headerColor} marginBottom={'$2'}>
-              {workoutDetail?.name}
+              {workoutDetail?.name_translated?.[lang] ?? workoutDetail?.name}
             </H3>
             <Paragraph
               lineHeight={22}
@@ -39,7 +45,7 @@ export default function WorkoutDetail() {
               ellipsizeMode="tail"
               color={paragraphColor}
             >
-              {workoutDetail?.description}
+              {workoutDetail?.description_translated?.[lang] ?? workoutDetail?.description}
             </Paragraph>
             <XStack marginTop={14} space>
               <Card padding={'$2'} paddingHorizontal={'$2.5'} borderRadius={8} theme={'blue'}>
@@ -60,6 +66,7 @@ export default function WorkoutDetail() {
             exercises={exercises}
             onStart={() => {
               push(`/workout/${workoutId}/play`);
+              updatedSelectedWorkout(workoutId);
             }}
           />
         </YStack>

@@ -6,7 +6,7 @@ import { getObjectFromArray } from 'app/utils/transformer';
 const refetchCondition = {
   refetchOnMount: false,
   refetchOnWindowFocus: false,
-  //   staleTime: 6000 * 6000
+  // staleTime: 1000,
 };
 
 export const useHomeScreen = () => {
@@ -68,11 +68,12 @@ export const useSections = () => {
   const { isLoading: isChallengesLoading, challengesMap } = useAllChallenges();
 
   const sections = homeSections?.map((section: Sections) => {
-    const { id, name, workoutIds, challengeIds } = section;
+    const { id, name, workoutIds, challengeIds, name_translated } = section;
 
     return {
       id,
       name,
+      name_translated,
       type: workoutIds?.length ? ListType.workout : ListType.challenge,
       workouts: workoutIds?.map((id) => workoutsMap[id]),
       challenges: challengeIds?.map((id) => challengesMap[id]),

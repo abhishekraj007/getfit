@@ -5,20 +5,21 @@ import {
   Text,
   H5,
   H6,
-  H4,
   useWindowDimensions,
   Button,
-  Image,
   YStack,
   useThemeName,
-  ImageBackground,
+  Paragraph,
+  CustomModal,
 } from '@t4/ui/src';
 import { useRouter } from 'solito/router';
-import { CheckCircle, Pause, Play } from '@tamagui/lucide-icons';
+import { CheckCircle, Info, Pause, Play } from '@tamagui/lucide-icons';
 import { IExercise } from '@t4/ui/src/modals';
 import { SolitoImage } from 'solito/image';
-import { HEADER_HEIGHT_WITHOUT_IMAGE } from 'app/constants';
-import { WhitePage } from '@t4/ui/src/Page';
+import { useWorktouAtom } from 'app/atoms/workouts';
+import { useLanguage } from 'app/provider/language';
+import { CustomSheet } from './CustomSheet';
+import { ExerciseDetail } from './ExerciseDetail';
 // import { ResizeMode, Video } from 'expo-av';
 
 export interface ExerciseTimerProps {
@@ -36,10 +37,15 @@ export function ExerciseTimer(props: ExerciseTimerProps) {
 
   const { push } = useRouter();
   const { width, height } = useWindowDimensions();
+  const { selectedWorkout } = useWorktouAtom();
+  const { lang } = useLanguage();
+  const [showDetail, setShowDetail] = useState(false);
+
   const {
     image,
     sets = 2,
     title,
+    title_translated,
     reps_unit = 'rep',
     reps_value = 3,
     rest_unit = 'sec',
@@ -132,12 +138,7 @@ export function ExerciseTimer(props: ExerciseTimerProps) {
       if (sets === currentSets) {
         if (isEnd) {
           setTimeout(() => {
-            push('/completed');
-            // push('completed', {
-            //   id: workoutId,
-            //   total: totalItems,
-            //   time: totaltime,
-            // });
+            push(`/workout/${selectedWorkout}/completed`);
           }, 1000);
         } else if (!isEnd) {
           setTimeout(() => {
@@ -231,15 +232,19 @@ export function ExerciseTimer(props: ExerciseTimerProps) {
   const renderExerciseInProgress = () => {
     if (!finished && !shouldTakeRest) {
       return (
-        <YStack
-          alignItems="center"
-          // animation={'bouncy'}
-          // animateOnly={['transform']}
-        >
+        <YStack alignItems="center">
           <SolitoImage width={width} height={height - 420} src={image} alt="" unoptimized />
-          <H5 marginTop={24} fontWeight={'bold'}>
-            {title}
-          </H5>
+
+          <XStack alignItems="center" space marginTop={24}>
+            <H5 fontWeight={'bold'}>{title_translated?.[lang] ?? title}</H5>
+
+            <Button
+              chromeless
+              unstyled
+              icon={<Info size={'$1'} />}
+              onPress={() => setShowDetail(true)}
+            />
+          </XStack>
           <XStack marginTop={20} marginBottom={20}>
             <YStack alignItems="center" marginRight="$8">
               <XStack alignItems="center">
@@ -330,6 +335,12 @@ export function ExerciseTimer(props: ExerciseTimerProps) {
       {showRest && renderRest()}
       {finished && renderFinishedScreen()}
       {!finished && renderBottomActions()}
+
+      {showDetail && (
+        <CustomSheet open={showDetail} onOpenChange={setShowDetail} scrollView={false}>
+          <ExerciseDetail exercise={exercise} />
+        </CustomSheet>
+      )}
     </YStack>
   );
 }

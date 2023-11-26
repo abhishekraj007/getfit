@@ -19,14 +19,23 @@ interface PageHeaderProps {
   title?: string;
   onBack?: () => void;
   children?: React.ReactNode;
+  height?: number;
+  hasBackdrop?: boolean;
 }
 
-export function PageHeader({ image, onBack, title, children }: PageHeaderProps) {
+export function PageHeader({
+  image,
+  onBack,
+  title,
+  children,
+  height,
+  hasBackdrop = true,
+}: PageHeaderProps) {
   const { width } = useWindowDimensions();
   const isThemeDark = useThemeName().includes('dark');
   const { back } = useRouter();
 
-  const backIconColor = image ? 'white' : isThemeDark ? 'white' : 'black';
+  const backIconColor = image && !hasBackdrop ? 'white' : isThemeDark ? 'white' : 'black';
 
   const headerBackgroundColor = image ? 'transparent' : isThemeDark ? 'transparent' : 'white';
 
@@ -47,6 +56,7 @@ export function PageHeader({ image, onBack, title, children }: PageHeaderProps) 
             }}
             unstyled
             marginRight={'$4'}
+            // themeInverse={}
           />
 
           {title && <H5 color={'white'}>{title}</H5>}
@@ -66,17 +76,23 @@ export function PageHeader({ image, onBack, title, children }: PageHeaderProps) 
       {image ? (
         <ImageBackground
           source={{ uri: image }}
-          resizeMode={'cover'}
+          resizeMode={height ? 'contain' : 'cover'}
           width={width}
-          height={HEADER_HEIGHT}
+          height={height ?? HEADER_HEIGHT}
         >
-          <LinearGradient
-            width={width}
-            height={HEADER_HEIGHT}
-            colors={['rgba(0,0,0,0.6)', 'rgba(0,0,0,0.4)']}
-          >
-            <SafeAreaView>{renderBackButton()}</SafeAreaView>
-          </LinearGradient>
+          {hasBackdrop ? (
+            <LinearGradient
+              width={width}
+              height={height ?? HEADER_HEIGHT}
+              colors={['rgba(0,0,0,0.6)', 'rgba(0,0,0,0.4)']}
+            >
+              <SafeAreaView>{renderBackButton()}</SafeAreaView>
+            </LinearGradient>
+          ) : (
+            <SafeAreaView>
+              <YStack height={height ?? HEADER_HEIGHT}>{renderBackButton()}</YStack>
+            </SafeAreaView>
+          )}
         </ImageBackground>
       ) : (
         <SafeAreaView>{renderBackButton()}</SafeAreaView>

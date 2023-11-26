@@ -13,7 +13,21 @@ import { DocumentData } from 'firebase/firestore';
 
 export const mapDocumentToExercise = (data: DocumentData[]): IExercise[] => {
   return data.map(
-    ({ id, video, image, rest, title, equipment, body_parts, reps, sets, tips, instructions }) => {
+    ({
+      id,
+      video,
+      image,
+      rest,
+      title,
+      equipment,
+      body_parts,
+      reps,
+      sets,
+      tips,
+      instructions,
+      title_translated,
+      instructions_translated,
+    }) => {
       const body_partsIds: string[] = body_parts.map(({ id }) => id);
 
       return {
@@ -22,12 +36,14 @@ export const mapDocumentToExercise = (data: DocumentData[]): IExercise[] => {
         image,
         rest,
         title,
+        title_translated,
+        instructions,
+        instructions_translated,
         equipmentIds: equipment?.id,
         bodyPartsIds: body_partsIds,
         reps,
         sets,
         tips,
-        instructions,
       };
     }
   );
@@ -84,30 +100,44 @@ export const mapDocumentToChallenges = (data: DocumentData[]): IChallenge[] => {
 };
 
 export const mapDocumentToWorkout = (data: DocumentData[]): IWorkout[] => {
-  console.log({ data });
-
-  return data.map(({ id, name, duration, description, image, exercises, video, level }) => {
-    return {
+  return data.map(
+    ({
       id,
       name,
-      description,
+      name_translated,
       duration,
+      description,
+      description_translated,
       image,
-      exercises: exercises.map((item) => {
-        const { exercise, ...rest } = item;
-        return { ...rest, exerciseId: exercise?.id };
-      }),
+      exercises,
       video,
-      levelId: level.id,
-    };
-  });
+      level,
+    }) => {
+      return {
+        id,
+        name,
+        name_translated,
+        description,
+        description_translated,
+        duration,
+        image,
+        exercises: exercises.map((item) => {
+          const { exercise, ...rest } = item;
+          return { ...rest, exerciseId: exercise?.id };
+        }),
+        video,
+        levelId: level.id,
+      };
+    }
+  );
 };
 
 export const mapDocumentToSections = (data: DocumentData[]): Sections[] => {
-  return data.map(({ id, name, workoutIds, challengeIds }) => {
+  return data.map(({ id, name, workoutIds, challengeIds, name_translated }) => {
     return {
       id,
       name,
+      name_translated,
       workoutIds: (workoutIds ?? []).map(({ id }) => id),
       challengeIds: (challengeIds ?? []).map(({ id }) => id),
     };

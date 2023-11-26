@@ -13,13 +13,6 @@ export function ChallengeWeeks({ days, challengeId }) {
 
   const challengeDetails = challengesMap[challengeId];
 
-  console.log({
-    totalDays,
-
-    challengeId,
-    challengeDetails,
-  });
-
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       {totalDays.map((day) => {

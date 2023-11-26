@@ -14,10 +14,18 @@ import {
 } from '@t4/ui/src';
 import { LIST_MISSING_IMAGE } from 'app/constants/images';
 import { useColors } from 'app/hooks';
+import { useLanguage } from 'app/provider/language';
+import { useState } from 'react';
+import { useRouter } from 'solito/router';
+import { CustomSheet } from './CustomSheet';
+import { ExerciseDetail } from './ExerciseDetail';
 
 function ECard({ item }: { item: IExercise }) {
   const { width } = useWindowDimensions();
   const { backgroundColor, textPrimary, textSecondary } = useColors();
+  const { lang } = useLanguage();
+  const [showDetail, setShowDetail] = useState(false);
+  const { push } = useRouter();
 
   return (
     <Card
@@ -29,6 +37,8 @@ function ECard({ item }: { item: IExercise }) {
       pressStyle={{ scale: 0.96, opacity: 0.9 }}
       exitStyle={{ scale: 1, opacity: 1 }}
       backgroundColor={backgroundColor}
+      // onPress={() => push(`/exercise/${item.id}`)}
+      onPress={() => setShowDetail(true)}
     >
       <XStack alignItems="center">
         <SolitoImage
@@ -40,7 +50,7 @@ function ECard({ item }: { item: IExercise }) {
         />
 
         <YStack paddingVertical={'$3'} paddingHorizontal={'$4'}>
-          <H5 color={textPrimary}>{item.title}</H5>
+          <H5 color={textPrimary}>{item.title_translated?.[lang] ?? item.title}</H5>
           {item.reps_unit === 'rep' ? (
             <Paragraph color={textSecondary}>X {item.reps_value}</Paragraph>
           ) : (
@@ -48,6 +58,12 @@ function ECard({ item }: { item: IExercise }) {
           )}
         </YStack>
       </XStack>
+
+      {showDetail && (
+        <CustomSheet open={showDetail} onOpenChange={setShowDetail} scrollView={false}>
+          <ExerciseDetail exercise={item} />
+        </CustomSheet>
+      )}
     </Card>
   );
 }
@@ -59,7 +75,7 @@ export function Exercises({ exercises, onStart }: { exercises: IExercise[]; onSt
     <YStack position="relative">
       <ScrollView showsVerticalScrollIndicator={false} height={height - 420}>
         {exercises.map((item) => (
-          <ECard item={item} />
+          <ECard key={item.id} item={item} />
         ))}
       </ScrollView>
 
