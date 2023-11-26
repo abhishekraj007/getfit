@@ -1,9 +1,7 @@
 import { AnimatePresence } from '@tamagui/animate-presence';
-import { ArrowLeft, ArrowRight } from '@tamagui/lucide-icons';
 import { useState } from 'react';
-import { Button, Image, XStack, YStack, styled, useWindowDimensions } from 'tamagui';
-import { WhitePage } from './Page';
-import { IExercise, IList, IListData } from './modals';
+import { YStack, styled, useWindowDimensions } from 'tamagui';
+import { IExercise } from './modals';
 
 const YStackEnterable = styled(YStack, {
   variants: {
@@ -23,8 +21,6 @@ interface RenderItemProps {
 interface PageSliderProps {
   data: IExercise[];
   renderItem: ({}: RenderItemProps) => React.ReactNode;
-  // onNext: () => void;
-  // onPrev: () => void;
 }
 
 export function PageSlider({ data, renderItem }: PageSliderProps) {
@@ -36,12 +32,14 @@ export function PageSlider({ data, renderItem }: PageSliderProps) {
     setPage([page + newDirection, newDirection]);
   };
 
+  const { width, height } = useWindowDimensions();
+
   const enterVariant = direction === 1 || direction === 0 ? 'isRight' : 'isLeft';
 
   const exitVariant = direction === 1 ? 'isLeft' : 'isRight';
 
   return (
-    <WhitePage overflow="hidden" position="relative" alignItems="center">
+    <YStack height={height} width={width} overflow="hidden" position="relative" alignItems="center">
       <AnimatePresence enterVariant={enterVariant} exitVariant={exitVariant}>
         <YStackEnterable
           key={page}
@@ -59,7 +57,7 @@ export function PageSlider({ data, renderItem }: PageSliderProps) {
           })}
         </YStackEnterable>
       </AnimatePresence>
-    </WhitePage>
+    </YStack>
   );
 }
 

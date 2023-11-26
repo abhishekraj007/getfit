@@ -6,15 +6,23 @@ import { LinearGradient } from '@tamagui/linear-gradient';
 import { CARD_WORKOUT_HEIGHT, CARD_WORKOUT_RADIUS, CARD_WORKOUT_WIDTH } from './constant';
 
 interface WorkoutCardProps {
-  workout: IWorkout | IChallenge;
+  name: string;
+  image: string;
+  isChallenge: boolean;
+  duration: string;
   onPress: () => void;
   isLast?: boolean;
 }
 const CARD_GRADIENT_COLOR = ['rgba(0,0,0,0.2)', 'rgba(0,0,0,0.1)'];
 
-export function WorkoutCard({ workout, onPress, isLast = false }: WorkoutCardProps) {
-  const { isChallenge, name, duration } = workout;
-
+export function WorkoutCard({
+  onPress,
+  isLast = false,
+  name = '',
+  isChallenge = false,
+  duration = '',
+  image = '',
+}: WorkoutCardProps) {
   return (
     <Card
       bordered
@@ -37,7 +45,7 @@ export function WorkoutCard({ workout, onPress, isLast = false }: WorkoutCardPro
       borderRadius={CARD_WORKOUT_RADIUS}
     >
       <ImageBackground
-        source={{ uri: workout.image ?? '' }}
+        source={{ uri: image }}
         resizeMode={'cover'}
         width={CARD_WORKOUT_WIDTH}
         height={CARD_WORKOUT_HEIGHT}

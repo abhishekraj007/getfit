@@ -6,6 +6,7 @@ export * from './CustomToast';
 export * from './list';
 export * from './ImageBackground';
 export * from './dialogs/AlertDialog';
+export * from './dialogs/Modal';
 export * from './PageSlider';
 export * from './WorkoutCard';
 export * from './Loader';

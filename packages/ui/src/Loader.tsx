@@ -3,7 +3,7 @@ import { Skeleton } from 'moti/skeleton';
 import { CARD_WORKOUT_HEIGHT, CARD_WORKOUT_WIDTH } from './constant';
 
 interface LoaderProps {
-  theme: 'light' | 'dark';
+  theme?: 'light' | 'dark';
 }
 
 export const WorkoutLoader = ({ theme = 'light' }: LoaderProps) => {
@@ -24,6 +24,28 @@ export const HomeLoader = ({ theme = 'light' }: LoaderProps) => {
       <WorkoutLoader theme={theme} />
       <WorkoutLoader theme={theme} />
       <WorkoutLoader theme={theme} />
+    </>
+  );
+};
+
+export const WorkoutDetailLoader = ({ theme = 'light' }: LoaderProps) => {
+  const { width } = useWindowDimensions();
+
+  return (
+    <>
+      <YStack padding={'$4'} space>
+        <Skeleton colorMode={theme} height={20} width={200} />
+        <Skeleton colorMode={theme} height={20} width={250} />
+
+        <XStack space>
+          <Skeleton colorMode={theme} height={20} width={80} />
+          <Skeleton colorMode={theme} height={20} width={80} />
+        </XStack>
+        <Skeleton colorMode={theme} height={80} width={width - 40} />
+        <Skeleton colorMode={theme} height={80} width={width - 40} />
+        <Skeleton colorMode={theme} height={80} width={width - 40} />
+        <Skeleton colorMode={theme} height={80} width={width - 40} />
+      </YStack>
     </>
   );
 };

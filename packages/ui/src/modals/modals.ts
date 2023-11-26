@@ -7,10 +7,14 @@ export interface IWorkoutExerciseItem {
   exerciseId: string;
 }
 
+export type Tranlation = { [key: string]: string };
+
 export interface IWorkout {
   id: string;
   name: string;
+  name_translated?: Tranlation;
   description: string;
+  description_translated?: Tranlation;
   image: string;
   video?: string;
   duration?: string; //  duration: '3 Days/Week',
@@ -25,17 +29,44 @@ export interface IWorkout {
   isChallenge?: boolean;
 }
 
+export interface IChallenge {
+  id: string;
+  name: string;
+  name_translated?: Tranlation;
+  description: string;
+  description_translated?: Tranlation;
+  gender: string;
+  bodyPartsIds: string[];
+  duration: string;
+  image: string;
+  video?: string;
+  goal?: string;
+  price?: string;
+  status?: string;
+  equipmentsIds: string[];
+  day_1: string[];
+  day_2: string[];
+  day_3: string[];
+  day_4: string[];
+  day_5: string[];
+  day_6: string[];
+  day_7: string[];
+  isChallenge?: boolean;
+}
+
 export interface IExercise {
   id: string;
   video: string;
   image: string;
   title: string;
+  title_translated?: Tranlation;
   equipmentIds: string;
   bodyPartsIds: string[];
   reps: number;
   sets: number;
   tips: string;
   instructions: string;
+  instructions_translated?: string;
   rest: Rest;
   rest_unit?: 'sec' | 'min';
   rest_value?: number;
@@ -53,29 +84,6 @@ export enum ListType {
   workout = 'workout',
 }
 
-export interface IChallenge {
-  id: string;
-  name: string;
-  gender: string;
-  bodyPartsIds: string[];
-  duration: string;
-  image: string;
-  video?: string;
-  goal?: string;
-  price?: string;
-  status?: string;
-  description: string;
-  equipmentsIds: string[];
-  day_1: string[];
-  day_2: string[];
-  day_3: string[];
-  day_4: string[];
-  day_5: string[];
-  day_6: string[];
-  day_7: string[];
-  isChallenge?: boolean;
-}
-
 export enum RestUnit {
   sec = 'sec',
   min = 'min',
@@ -86,6 +94,7 @@ export interface Screen {}
 export interface Sections {
   id: string;
   name: string;
+  name_translated?: Tranlation;
   workoutIds?: string[];
   challengeIds?: string[];
 }

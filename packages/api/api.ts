@@ -58,8 +58,6 @@ export const fetchExercises = async () => {
 export const fetchChallenges = async () => {
   const data = await docFetcher(challengesCollection);
 
-  console.log('chall', data);
-
   return mapDocumentToChallenges(data);
 };
 
