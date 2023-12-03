@@ -1,7 +1,7 @@
-import { Sheet, SheetProps, Text, useWindowDimensions } from 'tamagui';
+import { Sheet, SheetProps } from 'tamagui';
 
 import { BackHandler, Platform } from 'react-native';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useColors } from 'app/hooks';
 import { View } from '@t4/ui/src';
 
@@ -15,8 +15,6 @@ export const CustomSheet = ({
   children,
   scrollView = true,
 }: CustomSheetProps) => {
-  const { height } = useWindowDimensions();
-
   const [localOpen, setLocalOpen] = useState(false);
   const { backgroundColor } = useColors();
 
@@ -34,7 +32,6 @@ export const CustomSheet = ({
     if (Platform.OS !== 'web') {
       const backAction = () => {
         if (open) {
-          console.log('is open, back press');
           onOpenChange && onOpenChange(false);
           return true;
         }
@@ -52,7 +49,10 @@ export const CustomSheet = ({
       forceRemoveScrollEnabled={open}
       modal
       open={localOpen}
-      onOpenChange={onOpenChange}
+      //   onOpenChange={onOpenChange}
+      onOpenChange={(open) => {
+        onOpenChange && onOpenChange(open);
+      }}
       dismissOnSnapToBottom
       animation="medium"
       // snapPointsMode="fit"

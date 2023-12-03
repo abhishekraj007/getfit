@@ -1,4 +1,5 @@
 import { AlertDialog, Button, XStack, YStack } from '@t4/ui/src';
+import { useTranslation } from 'app/provider/language';
 
 interface ExitModalProps {
   open: boolean;
@@ -7,6 +8,8 @@ interface ExitModalProps {
 }
 
 export function ExitModal({ open = false, onConfirm, onCancel }: ExitModalProps) {
+  const translation = useTranslation();
+
   return (
     <AlertDialog open={open}>
       <AlertDialog.Portal>
@@ -38,18 +41,18 @@ export function ExitModal({ open = false, onConfirm, onCancel }: ExitModalProps)
           y={0}
         >
           <YStack space>
-            <AlertDialog.Title>Exit</AlertDialog.Title>
+            <AlertDialog.Title>{translation?.exit}</AlertDialog.Title>
 
-            <AlertDialog.Description>Are you sure you want to Quit?</AlertDialog.Description>
+            <AlertDialog.Description>{translation?.quitMessage}</AlertDialog.Description>
             <XStack space="$3" justifyContent="flex-end">
               <AlertDialog.Action asChild>
                 <Button onPress={onConfirm} chromeless>
-                  Quit
+                  {translation?.quit}
                 </Button>
               </AlertDialog.Action>
               <AlertDialog.Cancel asChild>
                 <Button onPress={onCancel} themeInverse>
-                  Continue
+                  {translation?.continue}
                 </Button>
               </AlertDialog.Cancel>
             </XStack>

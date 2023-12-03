@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createParam } from 'solito';
-import { Button, YStack, XStack, ImageBackground, useWindowDimensions, H2 } from '@t4/ui/src';
+import { Button, YStack, XStack, useWindowDimensions } from '@t4/ui/src';
 import { useRouter } from 'solito/router';
 import { Home, RotateCcw, X } from '@tamagui/lucide-icons';
 import { CONGRATULATION_IMAGE } from 'app/constants/images';
-
-import { LinearGradient } from '@tamagui/linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { WhitePage } from 'app/components/Page';
+import { useTranslation } from 'app/provider/language';
+import { BackHandler, Platform } from 'react-native';
+import { SolitoImage } from 'solito/image';
 
 const { useParam } = createParam<{ id: string }>();
 
@@ -15,55 +16,65 @@ export default function Completed() {
   // useKeepAwake();
 
   const [workoutId = ''] = useParam('id');
-  const { back, push } = useRouter();
+  const { push } = useRouter();
+  const translation = useTranslation();
 
   const { height, width } = useWindowDimensions();
 
+  useEffect(() => {
+    if (Platform.OS !== 'web') {
+      const backAction = () => {
+        push('/');
+        return true;
+      };
+
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+
+      return () => backHandler.remove();
+    }
+  }, []);
+
   return (
     <WhitePage>
-      <ImageBackground
-        source={{ uri: CONGRATULATION_IMAGE }}
-        resizeMode={'cover'}
-        width={width}
-        height={height}
-      >
-        <SafeAreaView>
-          <LinearGradient
-            width={width}
-            height={height}
-            colors={['rgba(0,0,0,0.6)', 'rgba(0,0,0,0.4)']}
-          >
-            <XStack>
-              <Button
-                unstyled
-                paddingHorizontal="$4"
-                icon={<X size={'$2.5'} color={'$gray11'} />}
-                onPress={() => push('/')}
-                themeInverse
-                marginTop={24}
-              >
-                {/* <X size={'$3'} /> */}
-              </Button>
-            </XStack>
-            <YStack height={height} alignItems="center" justifyContent="center">
-              <H2 color={'white'}>Congratulations</H2>
-              <XStack space marginTop={24}>
-                <Button themeInverse icon={Home} chromeless onPress={() => push('/')}>
-                  Home
-                </Button>
-                <Button
-                  iconAfter={RotateCcw}
-                  chromeless
-                  themeInverse
-                  onPress={() => push(`/workout/${workoutId}`)}
-                >
-                  Restart
-                </Button>
-              </XStack>
-            </YStack>
-          </LinearGradient>
-        </SafeAreaView>
-      </ImageBackground>
+      <SafeAreaView>
+        <XStack paddingHorizontal="$4">
+          <Button
+            icon={<X size={'$2'} color={'$gray11'} />}
+            onPress={() => push('/')}
+            // themeInverse
+            circular
+          ></Button>
+        </XStack>
+        <YStack
+          // backgroundColor={'red'}
+          height={height - 75}
+          alignItems="center"
+          justifyContent="center"
+        >
+          {/* <H2 color={'white'}>{translation?.congratulations}</H2> */}
+          <SolitoImage
+            width={width - 80}
+            height={100}
+            src={CONGRATULATION_IMAGE}
+            // resizeMode="contain"
+            alt="congrates"
+            unoptimized
+          />
+          <XStack space marginTop={30}>
+            <Button icon={Home} chromeless onPress={() => push('/')}>
+              {translation?.home}
+            </Button>
+            <Button
+              iconAfter={RotateCcw}
+              chromeless
+              // themeInverse
+              onPress={() => push(`/workout/${workoutId}`)}
+            >
+              {translation?.restart}
+            </Button>
+          </XStack>
+        </YStack>
+      </SafeAreaView>
     </WhitePage>
   );
 }

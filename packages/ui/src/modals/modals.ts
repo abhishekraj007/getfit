@@ -7,14 +7,14 @@ export interface IWorkoutExerciseItem {
   exerciseId: string;
 }
 
-export type Tranlation = { [key: string]: string };
+export type translation = { [key: string]: string };
 
 export interface IWorkout {
   id: string;
   name: string;
-  name_translated?: Tranlation;
+  name_translated?: translation;
   description: string;
-  description_translated?: Tranlation;
+  description_translated?: translation;
   image: string;
   video?: string;
   duration?: string; //  duration: '3 Days/Week',
@@ -32,9 +32,9 @@ export interface IWorkout {
 export interface IChallenge {
   id: string;
   name: string;
-  name_translated?: Tranlation;
+  name_translated?: translation;
   description: string;
-  description_translated?: Tranlation;
+  description_translated?: translation;
   gender: string;
   bodyPartsIds: string[];
   duration: string;
@@ -59,7 +59,7 @@ export interface IExercise {
   video: string;
   image: string;
   title: string;
-  title_translated?: Tranlation;
+  title_translated?: translation;
   equipmentIds: string;
   bodyPartsIds: string[];
   reps: number;
@@ -94,7 +94,7 @@ export interface Screen {}
 export interface Sections {
   id: string;
   name: string;
-  name_translated?: Tranlation;
+  name_translated?: translation;
   workoutIds?: string[];
   challengeIds?: string[];
 }

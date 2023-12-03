@@ -1,6 +1,4 @@
 import { Card, Paragraph, YStack, Image, H4, H6, H5 } from 'tamagui';
-import { IChallenge, IWorkout } from './modals';
-import LevelRate from './LevelRate';
 import { ImageBackground } from './ImageBackground';
 import { LinearGradient } from '@tamagui/linear-gradient';
 import { CARD_WORKOUT_HEIGHT, CARD_WORKOUT_RADIUS, CARD_WORKOUT_WIDTH } from './constant';
@@ -29,7 +27,6 @@ export function WorkoutCard({
       animation="bouncy"
       width={CARD_WORKOUT_WIDTH}
       height={CARD_WORKOUT_HEIGHT}
-      // scale={0.95}
       hoverStyle={{ opacity: 0.9, scale: 0.99 }}
       pressStyle={{ opacity: 0.9, scale: 0.9 }}
       enterStyle={{

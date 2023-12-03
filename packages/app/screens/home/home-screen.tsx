@@ -1,7 +1,7 @@
 import React from 'react';
 import { XStack, YStack, H4 } from 'tamagui';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { HomeLoader, ScrollView } from '@t4/ui/src';
+import { H5, HomeLoader, ScrollView } from '@t4/ui/src';
 import { LanguageSelect, ThemeToggle, WorkoutList } from 'app/components';
 import { ListType } from '@t4/ui/src/modals';
 import { useSections } from 'app/hooks/useData';
@@ -23,7 +23,7 @@ export function HomeScreen() {
           justifyContent="space-between"
           paddingBottom={'$3'}
         >
-          <H4>{APP_NAME}</H4>
+          <H5 fontWeight={'bold'}>{APP_NAME}</H5>
 
           <XStack space>
             <ThemeToggle />

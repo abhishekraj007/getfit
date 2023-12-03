@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useTransition } from 'react';
 import { useColors, useParam } from 'app/hooks';
 import { YStack, H3, Paragraph, XStack, Card, WorkoutDetailLoader } from '@t4/ui/src';
 import { Exercises, PageHeader } from 'app/components';
@@ -6,7 +6,7 @@ import { useExercisesByWorkoutId } from 'app/hooks/useData';
 import { useRouter } from 'solito/router';
 import { PersonStanding, Timer } from '@tamagui/lucide-icons';
 import { useAppTheme } from 'app/atoms/theme';
-import { useLanguage } from 'app/provider/language';
+import { useLanguage, useTranslation } from 'app/provider/language';
 import { useWorktouAtom } from 'app/atoms/workouts';
 import { WhitePage } from 'app/components/Page';
 
@@ -19,6 +19,7 @@ export default function WorkoutDetail() {
   const [theme] = useAppTheme();
   const { lang } = useLanguage();
   const { updatedSelectedWorkout } = useWorktouAtom();
+  const translation = useTranslation();
 
   return (
     <WhitePage userSelect="none">
@@ -57,7 +58,9 @@ export default function WorkoutDetail() {
               <Card padding={'$2'} paddingHorizontal={'$2.5'} borderRadius={8} theme={'orange'}>
                 <XStack>
                   <PersonStanding />
-                  <Paragraph marginLeft={8}>{(exercises ?? []).length} Exercises</Paragraph>
+                  <Paragraph marginLeft={8}>
+                    {(exercises ?? []).length} {translation?.exercises}
+                  </Paragraph>
                 </XStack>
               </Card>
             </XStack>

@@ -35,7 +35,7 @@ export function PageHeader({
   const isThemeDark = useThemeName().includes('dark');
   const { back } = useRouter();
 
-  const backIconColor = image && !hasBackdrop ? 'white' : isThemeDark ? 'white' : 'black';
+  const backIconColor = image || !hasBackdrop ? 'white' : isThemeDark ? 'white' : 'black';
 
   const headerBackgroundColor = image ? 'transparent' : isThemeDark ? 'transparent' : 'white';
 

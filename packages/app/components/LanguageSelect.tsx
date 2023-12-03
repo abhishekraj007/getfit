@@ -23,19 +23,19 @@ const languages = [
 
 const languagesMap = {
   en: 'English',
-  es: 'Spanish',
-  de: 'German',
-  fr: 'French',
-  ja: 'Japanese',
-  zh: 'Chinese',
-  hi: 'Hindi',
-  kn: 'Kannada',
-  ru: 'Russian',
-  ta: 'Tamil',
-  ur: 'Urdu',
-  ar: 'Arabic',
-  pt: 'Portuguese',
-  it: 'Italian',
+  es: 'Español', // Spanish
+  de: 'Deutsch', // German
+  fr: 'Français', // French
+  ja: '日本語', // Japanese
+  zh: '中文', // Chinese
+  hi: 'हिन्दी', // Hindi
+  kn: 'ಕನ್ನಡ', // Kannada
+  ru: 'Русский', // Russian
+  ta: 'தமிழ்', // Tamil
+  ur: 'اردو', // Urdu
+  ar: 'العربية', // Arabic
+  pt: 'Português', // Portuguese
+  it: 'Italiano', // Italian
 };
 
 export function LanguageSelect() {
@@ -50,7 +50,6 @@ export function LanguageSelect() {
         unstyled
         chromeless
         onPress={() => setOpen(true)}
-        backgroundColor={'red'}
       ></Button>
 
       {open && (

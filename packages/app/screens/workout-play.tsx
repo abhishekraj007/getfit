@@ -7,6 +7,7 @@ import { useExercisesByWorkoutId } from 'app/hooks';
 import { CheckCircle, ChevronLeft, ChevronRight } from '@tamagui/lucide-icons';
 import { WhitePage } from 'app/components/Page';
 import { BackHandler, Platform } from 'react-native';
+import { useTranslation } from 'app/provider/language';
 
 const { useParam } = createParam<{ id: string }>();
 
@@ -19,7 +20,7 @@ export default function WorkoutPlay() {
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [showExitAlert, setShowExitAlert] = useState(false);
-
+  const translation = useTranslation();
   const exercisesLength = exercises?.length || 0;
 
   useEffect(() => {
@@ -57,6 +58,8 @@ export default function WorkoutPlay() {
     );
   };
 
+  const finishText = translation?.finish;
+
   const rightButton = (onNext, pageNumber) => {
     const isLastExercise = pageNumber === exercises.length - 1;
     return (
@@ -65,7 +68,7 @@ export default function WorkoutPlay() {
         iconAfter={isLastExercise ? CheckCircle : ChevronRight}
         size={isLastExercise ? '$6' : '$10'}
         chromeless
-        padding={'$3'}
+        padding={isLastExercise ? '$3' : 0}
         onPress={() => {
           setIsPlaying(false);
 
@@ -77,7 +80,7 @@ export default function WorkoutPlay() {
         }}
         color={`${isLastExercise ? '$color.green10Dark' : ''}`}
       >
-        <H5 color={'$color.green10Dark'}>{isLastExercise ? 'Finish' : ''}</H5>
+        <H5 color={'$color.green10Dark'}>{isLastExercise ? finishText : ''}</H5>
       </Button>
     );
   };
@@ -92,6 +95,8 @@ export default function WorkoutPlay() {
         totalItems={exercisesLength}
         leftButton={leftButton(onPrev, pageNumber)}
         rightButton={rightButton(onNext, pageNumber)}
+        onNext={onNext}
+        onPrev={onPrev}
       />
     );
   };

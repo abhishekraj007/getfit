@@ -16,29 +16,37 @@ import { SolitoImage } from 'solito/image';
 export function ExerciseDetail({
   exercise,
   hideImage = false,
+  lang,
 }: {
   exercise: IExercise;
   hideImage?: boolean;
+  lang: string;
 }) {
-  const { lang } = useLanguage();
   const { textPrimary, backgroundColor } = useColors();
   const { width } = useWindowDimensions();
 
   const { title, title_translated, image, instructions, instructions_translated } = exercise;
 
   return (
-    <YStack padding={0}>
-      {/* {!hideImage && <Image width={width} height={300} source={{ uri: image }} alt="" />} */}
-      {!hideImage && <SolitoImage width={width} height={220} src={image} alt="" unoptimized />}
+    <YStack padding={0} paddingBottom={50}>
       {/* {!hideImage && (
-          <ImageBackground
-          source={{ uri: image }}
+        <Image
+          width={'100%'}
+          height={200}
+          source={{ width: 200, height: 200, uri: image }}
+          alt=""
+        />
+      )} */}
+      {!hideImage && (
+        <SolitoImage
           width={width}
-          height={400}
+          height={300}
+          src={image}
           alt=""
           resizeMode="contain"
-          />
-        )} */}
+          unoptimized
+        />
+      )}
 
       <YStack
         paddingHorizontal={'$4'}

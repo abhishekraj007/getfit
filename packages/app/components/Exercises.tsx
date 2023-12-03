@@ -14,7 +14,7 @@ import {
 } from '@t4/ui/src';
 import { LIST_MISSING_IMAGE } from 'app/constants/images';
 import { useColors } from 'app/hooks';
-import { useLanguage } from 'app/provider/language';
+import { useLanguage, useTranslation } from 'app/provider/language';
 import { useState } from 'react';
 import { useRouter } from 'solito/router';
 import { CustomSheet } from './CustomSheet';
@@ -61,7 +61,7 @@ function ECard({ item }: { item: IExercise }) {
 
       {showDetail && (
         <CustomSheet open={showDetail} onOpenChange={setShowDetail} scrollView={false}>
-          <ExerciseDetail exercise={item} />
+          <ExerciseDetail exercise={item} lang={lang} />
         </CustomSheet>
       )}
     </Card>
@@ -70,6 +70,7 @@ function ECard({ item }: { item: IExercise }) {
 
 export function Exercises({ exercises, onStart }: { exercises: IExercise[]; onStart }) {
   const { height } = useWindowDimensions();
+  const translation = useTranslation();
 
   return (
     <YStack position="relative">
@@ -89,7 +90,7 @@ export function Exercises({ exercises, onStart }: { exercises: IExercise[]; onSt
           onPress={onStart}
           borderRadius={50}
         >
-          Let's Go
+          {translation?.letsgo}
         </Button>
       </XStack>
     </YStack>
