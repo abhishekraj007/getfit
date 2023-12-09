@@ -5,9 +5,7 @@ import {
   Card,
   Paragraph,
   XStack,
-  View,
   H5,
-  useThemeName,
   useWindowDimensions,
   Button,
   ScrollView,
@@ -16,7 +14,6 @@ import { LIST_MISSING_IMAGE } from 'app/constants/images';
 import { useColors } from 'app/hooks';
 import { useLanguage, useTranslation } from 'app/provider/language';
 import { useState } from 'react';
-import { useRouter } from 'solito/router';
 import { CustomSheet } from './CustomSheet';
 import { ExerciseDetail } from './ExerciseDetail';
 
@@ -25,7 +22,7 @@ function ECard({ item }: { item: IExercise }) {
   const { backgroundColor, textPrimary, textSecondary } = useColors();
   const { lang } = useLanguage();
   const [showDetail, setShowDetail] = useState(false);
-  const { push } = useRouter();
+  // const { push } = useRouter();
 
   return (
     <Card

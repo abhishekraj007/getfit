@@ -15,18 +15,18 @@ export const CustomSheet = ({
   children,
   scrollView = true,
 }: CustomSheetProps) => {
-  const [localOpen, setLocalOpen] = useState(false);
+  // const [localOpen, setLocalOpen] = useState(false);
   const { backgroundColor } = useColors();
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLocalOpen(open);
-    }, 100);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setLocalOpen(open);
+  //   }, 100);
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [open]);
+  //   return () => {
+  //     clearTimeout(timer);
+  //   };
+  // }, [open]);
 
   useEffect(() => {
     if (Platform.OS !== 'web') {
@@ -48,7 +48,7 @@ export const CustomSheet = ({
     <Sheet
       forceRemoveScrollEnabled={open}
       modal
-      open={localOpen}
+      open={open}
       //   onOpenChange={onOpenChange}
       onOpenChange={(open) => {
         onOpenChange && onOpenChange(open);

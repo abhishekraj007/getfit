@@ -268,7 +268,7 @@ export function ExerciseTimer(props: ExerciseTimerProps) {
               marginBottom={'$1'}
               paddingRight={20}
             >
-              <H3 numberOfLines={1} fontWeight={'bold'}>
+              <H3 userSelect="none" maxWidth={width - 100} numberOfLines={1} fontWeight={'bold'}>
                 {title_translated?.[lang] ?? title}
               </H3>
               <View>
