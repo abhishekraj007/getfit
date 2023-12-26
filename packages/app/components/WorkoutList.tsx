@@ -26,14 +26,14 @@ export function WorkoutList({ data = [], title }: WorkoutListProps) {
         {data.map((item: IWorkout | IChallenge, index) => {
           return (
             <WorkoutCard
-              key={item.id}
+              key={item?.id}
               isLast={data.length - 1 === index}
-              name={(item.name_translated ? item.name_translated[lang] : item.name) || ''}
-              image={item.image}
-              isChallenge={item.isChallenge || false}
-              duration={item.duration || ''}
+              name={(item?.name_translated ? item?.name_translated[lang] : item?.name) || ''}
+              image={item?.image}
+              isChallenge={item?.isChallenge || false}
+              duration={item?.duration || ''}
               onPress={() => {
-                push(`/${item.isChallenge ? 'challenge' : 'workout'}/${item.id}`);
+                push(`/${item?.isChallenge ? 'challenge' : 'workout'}/${item?.id}`);
               }}
             />
           );

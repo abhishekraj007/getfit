@@ -70,14 +70,14 @@ export function Exercises({ exercises, onStart }: { exercises: IExercise[]; onSt
   const translation = useTranslation();
 
   return (
-    <YStack position="relative">
-      <ScrollView showsVerticalScrollIndicator={false} height={height - 420}>
+    <YStack position="relative" >
+      <ScrollView showsVerticalScrollIndicator={false} height={height - 500}>
         {exercises.map((item) => (
           <ECard key={item.id} item={item} />
         ))}
       </ScrollView>
 
-      <XStack position="relative" justifyContent="center" marginTop={-60} borderRadius={'$5'}>
+      <XStack position="relative" justifyContent="center" bottom={-25}  borderRadius={'$5'}>
         <Button
           size="$6"
           themeInverse
@@ -87,7 +87,7 @@ export function Exercises({ exercises, onStart }: { exercises: IExercise[]; onSt
           onPress={onStart}
           borderRadius={50}
         >
-          {translation?.letsgo}
+          {translation?.start}
         </Button>
       </XStack>
     </YStack>

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Fitable",
-    "slug": "fitable",
+    "name": "Body Fitness",
+    "slug": "bodyfitness",
     "scheme": "t4",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,7 +18,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.akrj.fitable",
+      "bundleIdentifier": "com.akrj.bodyfitnessapp",
       "config": {
         "usesNonExemptEncryption": false
       }
@@ -28,7 +28,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.akrj.fitable"
+      "package": "com.akrj.bodyfitnessapp"
     },
     "extra": {
       "eas": {

@@ -1,6 +1,7 @@
 {
   "en": {
     "letsgo": "Let's go",
+    "start": "Start",
     "mins": "Mins",
     "sec": "Sec",
     "exercises": "Exercises",
@@ -18,6 +19,7 @@
   },
   "ar": {
     "letsgo": "لنذهب",
+    "start": "ابدأ",
     "mins": "دقائق",
     "sec": "ثانية",
     "exercises": "تمارين",
@@ -35,6 +37,7 @@
   },
   "de": {
     "letsgo": "Lass uns gehen",
+    "start": "Starten",
     "mins": "Minuten",
     "sec": "Sekunde",
     "exercises": "Übungen",
@@ -53,6 +56,7 @@
 
   "es": {
     "letsgo": "Vamos",
+    "start": "Comenzar",
     "mins": "Minutos",
     "sec": "Segundos",
     "exercises": "Ejercicios",
@@ -70,6 +74,7 @@
   },
   "fr": {
     "letsgo": "Allons-y",
+    "start": "Commencer",
     "mins": "Minutes",
     "sec": "Seconde",
     "exercises": "Exercices",
@@ -87,6 +92,7 @@
   },
   "hi": {
     "letsgo": "चलो चलें",
+    "start": "शुरू करें",
     "mins": "मिनट",
     "sec": "सेकंड",
     "exercises": "व्यायाम",
@@ -104,6 +110,7 @@
   },
   "it": {
     "letsgo": "Andiamo",
+    "start": "Inizia",
     "mins": "Minuti",
     "sec": "Secondo",
     "exercises": "Esercizi",
@@ -121,6 +128,7 @@
   },
   "ja": {
     "letsgo": "行こう",
+    "start": "始める",
     "mins": "分",
     "sec": "秒",
     "exercises": "エクササイズ",
@@ -138,6 +146,7 @@
   },
   "kn": {
     "letsgo": "ಹೋಗೋಣ",
+    "start": "ಆರಂಭಿಸಿ",
     "mins": "ನಿಮಿಷ",
     "sec": "ಸೆಕೆಂಡ್",
     "exercises": "ಕಾರ್ಯಕ್ರಮಗಳು",
@@ -155,6 +164,7 @@
   },
   "pt": {
     "letsgo": "Vamos lá",
+    "start": "Iniciar",
     "mins": "Minutos",
     "sec": "Segundo",
     "exercises": "Exercícios",
@@ -172,6 +182,7 @@
   },
   "ru": {
     "letsgo": "Пойдем",
+    "start": "Начать",
     "mins": "Минуты",
     "sec": "Секунда",
     "exercises": "Упражнения",
@@ -189,6 +200,7 @@
   },
   "ta": {
     "letsgo": "செல்",
+    "start": "ஆரம்பத்திற்கு",
     "mins": "நிமிடங்கள்",
     "sec": "வினாடிகள்",
     "exercises": "பயிற்சிகள்",
@@ -206,6 +218,7 @@
   },
   "ur": {
     "letsgo": "چلو چلیں",
+    "start": "شروع",
     "mins": "منٹ",
     "sec": "سیکنڈ",
     "exercises": "ورزشیں",
@@ -223,6 +236,7 @@
   },
   "zh": {
     "letsgo": "走吧",
+    "start": "开始",
     "mins": "分钟",
     "sec": "秒",
     "exercises": "锻炼",

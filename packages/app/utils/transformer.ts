@@ -4,7 +4,6 @@ import {
   IEquipment,
   IExercise,
   ILevel,
-  IList,
   IListData,
   IWorkout,
   Sections,
@@ -121,12 +120,12 @@ export const mapDocumentToWorkout = (data: DocumentData[]): IWorkout[] => {
         description_translated,
         duration,
         image,
-        exercises: exercises.map((item) => {
+        exercises: (exercises ?? []).map((item) => {
           const { exercise, ...rest } = item;
           return { ...rest, exerciseId: exercise?.id };
         }),
         video,
-        levelId: level.id,
+        levelId: level?.id,
       };
     }
   );

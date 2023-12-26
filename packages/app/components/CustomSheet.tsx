@@ -9,24 +9,15 @@ export interface CustomSheetProps extends SheetProps {
   scrollView?: boolean;
 }
 
+const SHEET_DELAY = 300;
+
 export const CustomSheet = ({
   open = false,
   onOpenChange,
   children,
   scrollView = true,
 }: CustomSheetProps) => {
-  // const [localOpen, setLocalOpen] = useState(false);
   const { backgroundColor } = useColors();
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setLocalOpen(open);
-  //   }, 100);
-
-  //   return () => {
-  //     clearTimeout(timer);
-  //   };
-  // }, [open]);
 
   useEffect(() => {
     if (Platform.OS !== 'web') {
@@ -44,14 +35,30 @@ export const CustomSheet = ({
     }
   }, []);
 
+
+  const [localOpen, setLocalOpen] = useState(false);
+
+  useEffect(() => {
+     const timer = setTimeout(() => {
+      setLocalOpen(open);
+    }, SHEET_DELAY)
+
+    return () => {
+      timer && clearTimeout(timer);
+    }
+  }, [open])
+
   return (
     <Sheet
       forceRemoveScrollEnabled={open}
       modal
-      open={open}
+      open={localOpen}
       //   onOpenChange={onOpenChange}
       onOpenChange={(open) => {
-        onOpenChange && onOpenChange(open);
+        setTimeout(() => {
+          onOpenChange && onOpenChange(open);
+        }, SHEET_DELAY)
+    
       }}
       dismissOnSnapToBottom
       animation="medium"

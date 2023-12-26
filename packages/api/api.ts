@@ -37,7 +37,6 @@ export const fetchHomeScreen = async (local?) => {
   }
 
   const data = await docFetcher(homeCollection);
-
   return mapDocumentToSections(data);
 };
 
