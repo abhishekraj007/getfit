@@ -10,7 +10,7 @@ import {
 } from '@t4/ui/src';
 import { LinearGradient } from '@tamagui/linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ArrowLeft, ChevronLeft } from '@tamagui/lucide-icons';
+import { ArrowLeft } from '@tamagui/lucide-icons';
 import { useRouter } from 'solito/router';
 import { HEADER_HEIGHT, HEADER_HEIGHT_WITHOUT_IMAGE } from 'app/constants';
 
@@ -21,6 +21,7 @@ interface PageHeaderProps {
   children?: React.ReactNode;
   height?: number;
   hasBackdrop?: boolean;
+  rightContent?: React.ReactNode;
 }
 
 export function PageHeader({
@@ -30,6 +31,7 @@ export function PageHeader({
   children,
   height,
   hasBackdrop = true,
+  rightContent,
 }: PageHeaderProps) {
   const { width } = useWindowDimensions();
   const isThemeDark = useThemeName().includes('dark');
@@ -42,7 +44,12 @@ export function PageHeader({
   const renderBackButton = () => {
     return (
       <YStack paddingHorizontal="$4" backgroundColor={headerBackgroundColor}>
-        <XStack paddingRight="$5" alignItems="center" height={HEADER_HEIGHT_WITHOUT_IMAGE}>
+        <XStack
+          // paddingRight="$5"
+          alignItems="center"
+          height={HEADER_HEIGHT_WITHOUT_IMAGE}
+          justifyContent="space-between"
+        >
           <Button
             icon={<ArrowLeft size={'$1.5'} color={backIconColor} />}
             // icon={<ChevronLeft size={'$2'} color={backIconColor} />}
@@ -60,6 +67,7 @@ export function PageHeader({
           />
 
           {title && <H5 color={'white'}>{title}</H5>}
+          {rightContent && rightContent}
         </XStack>
 
         {children && (

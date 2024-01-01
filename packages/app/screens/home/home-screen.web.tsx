@@ -1,5 +1,5 @@
 import React from 'react';
-import { XStack, YStack } from 'tamagui';
+import { XStack, YStack, H4 } from 'tamagui';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { H5, HomeLoader, ScrollView } from '@t4/ui/src';
 import { LanguageSelect, ThemeToggle, WorkoutList } from 'app/components';
@@ -8,8 +8,6 @@ import { useSections } from 'app/hooks/useData';
 import { useAppTheme } from 'app/atoms/theme';
 import { APP_NAME } from 'app/constants';
 import { useLanguage } from 'app/provider/language';
-import { ReviewApp } from 'app/components/ReviewApp';
-import { ShareApp } from 'app/components/ShareApp';
 
 export function HomeScreen() {
   const { isLoading, sections } = useSections();
@@ -30,8 +28,6 @@ export function HomeScreen() {
           <XStack space>
             <ThemeToggle />
             <LanguageSelect />
-            <ReviewApp />
-            <ShareApp />
           </XStack>
         </XStack>
 

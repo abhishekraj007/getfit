@@ -1,32 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { createParam } from 'solito';
-import { Spinner, PageSlider, Button, H5 } from '@t4/ui/src';
+import { Spinner, PageSlider, Button, H5, View } from '@t4/ui/src';
 import { useRouter } from 'solito/router';
 import { ExerciseTimer, ExitModal, PageHeader } from 'app/components';
 import { useExercisesByWorkoutId } from 'app/hooks';
-import { CheckCircle, ChevronLeft, ChevronRight } from '@tamagui/lucide-icons';
+import { CheckCircle, ChevronLeft, ChevronRight, Music } from '@tamagui/lucide-icons';
 import { WhitePage } from 'app/components/Page';
 import { BackHandler, Platform } from 'react-native';
 import { useTranslation } from 'app/provider/language';
+import { useMusicPlayer } from 'app/provider/player/PlayerProvider';
 
 const { useParam } = createParam<{ id: string }>();
 
 export default function WorkoutPlay() {
-  // useKeepAwake();
-
   const [workoutId = ''] = useParam('id');
-  const { back, push } = useRouter();
+  const { push } = useRouter();
   const { exercises, isLoading } = useExercisesByWorkoutId(workoutId);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [showExitAlert, setShowExitAlert] = useState(false);
   const translation = useTranslation();
   const exercisesLength = exercises?.length || 0;
+  const { isPlayerScreenVisible, setIsPlayerScreenVisible } = useMusicPlayer();
 
   useEffect(() => {
     if (Platform.OS !== 'web') {
+      console.log({ isPlayerScreenVisible });
       const backAction = () => {
-        if (!showExitAlert) {
+        if (!showExitAlert && !isPlayerScreenVisible) {
           setShowExitAlert(true);
           return true;
         }
@@ -35,7 +36,11 @@ export default function WorkoutPlay() {
 
       const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
 
-      return () => backHandler.remove();
+      return () => {
+        console.log('play screen unmdf');
+
+        backHandler.remove();
+      };
     }
   }, []);
 
@@ -107,7 +112,20 @@ export default function WorkoutPlay() {
         onBack={() => {
           setShowExitAlert(true);
         }}
-      />
+        rightContent={
+          <View backgroundColor={'yellow'}>
+            <Button
+              icon={<Music size={'$1'} />}
+              unstyled
+              chromeless
+              onPress={() => {
+                setIsPlayerScreenVisible(true);
+                push(`/music`);
+              }}
+            ></Button>
+          </View>
+        }
+      ></PageHeader>
 
       {showExitAlert && (
         <ExitModal

@@ -27,7 +27,7 @@ export const mapDocumentToExercise = (data: DocumentData[]): IExercise[] => {
       title_translated,
       instructions_translated,
     }) => {
-      const body_partsIds: string[] = body_parts.map(({ id }) => id);
+      const body_partsIds: string[] = (body_parts ?? []).map(({ id }) => id);
 
       return {
         id,

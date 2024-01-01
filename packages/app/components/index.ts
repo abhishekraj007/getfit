@@ -8,3 +8,5 @@ export * from './ExitModal';
 export * from './LanguageSelect';
 export * from './CustomSheet';
 export * from './ExerciseDetail';
+export * from './MusicPlayer';
+export * from './FloatingMusicButton';

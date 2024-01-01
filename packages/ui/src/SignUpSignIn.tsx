@@ -1,13 +1,13 @@
-import { useState } from 'react'
-import { YStack, Paragraph, XStack, Button, Input, Stack } from 'tamagui'
-import { Link } from 'solito/link'
-import { type Provider } from '@supabase/supabase-js'
-import { SolitoImage } from 'solito/image'
+import { useState } from 'react';
+import { YStack, Paragraph, XStack, Button, Input, Stack } from 'tamagui';
+import { Link } from 'solito/link';
+// import { type Provider } from '@supabase/supabase-js'
+import { SolitoImage } from 'solito/image';
 
 interface Props {
-  type: 'sign-up' | 'sign-in'
-  handleOAuthWithPress: (provider: Provider) => void
-  handleEmailWithPress: (email, password) => void
+  type: 'sign-up' | 'sign-in';
+  handleOAuthWithPress: (provider: string) => void;
+  handleEmailWithPress: (email, password) => void;
 }
 
 export const SignUpSignInComponent = ({
@@ -15,8 +15,8 @@ export const SignUpSignInComponent = ({
   handleOAuthWithPress,
   handleEmailWithPress,
 }: Props): React.ReactNode => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   return (
     <YStack
@@ -68,22 +68,6 @@ export const SignUpSignInComponent = ({
             alt="Apple Logo"
           />
         </Button>
-        <Button
-          size="$5"
-          onPress={() => handleOAuthWithPress('discord')}
-          hoverStyle={{ opacity: 0.8 }}
-          focusStyle={{ scale: 0.95 }}
-          borderColor="$gray8Light"
-        >
-          <SolitoImage
-            style={{ width: 25, height: 22 }}
-            src={'/auth/discord-logo.png'}
-            width={20}
-            height={20}
-            resizeMode="contain"
-            alt="Discord Logo"
-          />
-        </Button>
       </XStack>
       <XStack alignItems="center" width="100%" justifyContent="space-between">
         <Stack height="$0.25" backgroundColor="black" width="$10" opacity={0.1} />
@@ -98,14 +82,14 @@ export const SignUpSignInComponent = ({
         autoCapitalize="none"
         placeholder="Email"
         onChangeText={(text) => {
-          setEmail(text)
+          setEmail(text);
         }}
       />
       <Input
         autoCapitalize="none"
         placeholder="Password"
         onChangeText={(text) => {
-          setPassword(text)
+          setPassword(text);
         }}
         textContentType="password"
         secureTextEntry
@@ -115,7 +99,7 @@ export const SignUpSignInComponent = ({
       <Button
         themeInverse
         onPress={() => {
-          handleEmailWithPress(email, password)
+          handleEmailWithPress(email, password);
         }}
         hoverStyle={{ opacity: 0.8 }}
         onHoverIn={() => {}}
@@ -163,5 +147,5 @@ export const SignUpSignInComponent = ({
         </XStack>
       )}
     </YStack>
-  )
-}
+  );
+};
