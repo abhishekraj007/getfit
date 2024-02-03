@@ -8,6 +8,7 @@ export default function Screen() {
         options={{
           title: 'Playlists',
           headerShown: false,
+          // headerBackground,
         }}
       />
       <Playlists />

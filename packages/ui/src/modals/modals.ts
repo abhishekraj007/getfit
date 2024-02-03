@@ -7,6 +7,15 @@ export interface IWorkoutExerciseItem {
   exerciseId: string;
 }
 
+export interface IAssets {
+  images: {
+    [key: string]: string;
+  };
+  texts: {
+    [key: string]: string;
+  };
+}
+
 export type translation = { [key: string]: string };
 
 export interface IWorkout {
@@ -174,31 +183,6 @@ export interface Owner {
   display_name: string;
 }
 
-// export interface PlaylistItem {
-//   collaborative: boolean;
-//   description: string;
-//   external_urls: ExternalUrls;
-//   href: string;
-//   id: string;
-//   images: Image[];
-//   name: string;
-//   owner: Owner;
-//   public: boolean;
-//   snapshot_id: string;
-//   tracks: ITracks;
-//   type: string;
-//   uri: string;
-// }
-
-// export interface IPlaylists {
-//   href: string;
-//   limit: number;
-//   next: string;
-//   offset: number;
-//   previous: string;
-//   total: number;
-//   items: PlaylistItem[];
-// }
 export interface IPlaylists {
   id: string;
   name: string;
@@ -216,29 +200,6 @@ export interface ITrack {
   image: string;
   duration?: number;
 }
-
-// export interface ITrack {
-//   album: Album;
-//   artists: Artist[];
-//   available_markets: string[];
-//   disc_number: number;
-//   duration_ms: number;
-//   explicit: boolean;
-//   external_ids: ExternalIds;
-//   external_urls: ExternalUrls;
-//   href: string;
-//   id: string;
-//   is_playable: boolean;
-//   linked_from: LinkedFrom;
-//   restrictions: Restrictions;
-//   name: string;
-//   popularity: number;
-//   preview_url: string;
-//   track_number: number;
-//   type: string;
-//   uri: string;
-//   is_local: boolean;
-// }
 
 export interface Followers {
   href: string;
@@ -295,43 +256,3 @@ export interface ExternalIds {
 }
 
 export interface LinkedFrom {}
-
-// export interface Track {
-//   album: Album;
-//   artists: Artist[];
-//   available_markets: string[];
-//   disc_number: number;
-//   duration_ms: number;
-//   explicit: boolean;
-//   external_ids: ExternalIds;
-//   external_urls: ExternalUrls;
-//   href: string;
-//   id: string;
-//   is_playable: boolean;
-//   linked_from: LinkedFrom;
-//   restrictions: Restrictions;
-//   name: string;
-//   popularity: number;
-//   preview_url: string;
-//   track_number: number;
-//   type: string;
-//   uri: string;
-//   is_local: boolean;
-// }
-
-// export interface TrackItem {
-//   added_at: string;
-//   added_by: AddedBy;
-//   is_local: boolean;
-//   track: Track;
-// }
-
-// export interface ITracks {
-//   href: string;
-//   limit: number;
-//   next: string;
-//   offset: number;
-//   previous: string;
-//   total: number;
-//   items: TrackItem[];
-// }

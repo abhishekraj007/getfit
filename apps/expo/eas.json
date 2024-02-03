@@ -22,11 +22,11 @@
       "channel": "production",
       "distribution": "store",
       "android": {
-        "buildType": "app-bundle",
-        "node": "18.18.2"
+        "buildType": "apk",
+        "node": "20.10.0"
       },
       "ios": {
-        "node": "18.18.2"
+        "node": "20.10.0"
       },
       "env": {
         "TAMAGUI_TARGET": "native"

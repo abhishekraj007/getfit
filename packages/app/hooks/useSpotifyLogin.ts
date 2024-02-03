@@ -39,8 +39,6 @@ const redirectUri = makeRedirectUri({
   useProxy: true,
 });
 
-console.log({ redirectUri });
-
 export function useSpotifyLogin() {
   const [request, response, promptAsync] = useAuthRequest(
     {

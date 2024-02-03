@@ -12,10 +12,8 @@ import {
   ScrollView,
   XStack,
 } from '@t4/ui/src';
-
 import * as WebBrowser from 'expo-web-browser';
-import { usePlaylists, useSpotifyLogin } from 'app/hooks';
-import { IPlaylists } from '@t4/ui/src/modals';
+import { usePlaylists } from 'app/hooks';
 import { PAGE_HEADER_HEIGHT_WITHOUT_BACKGROUND, PLAYER_BAR_HEIGHT } from 'app/constants';
 import { MusicPlayerBottomBar } from 'app/components/MusicPlayerBottomBar';
 
@@ -35,7 +33,7 @@ export default function Playlists() {
   // const hasError = hasPlaylistError || hasUserError;
   // const { items: playlists } = data || {};
 
-  console.log({ playlists });
+  // console.log({ playlists });
 
   const playlistHeight = height - PAGE_HEADER_HEIGHT_WITHOUT_BACKGROUND + PLAYER_BAR_HEIGHT;
 

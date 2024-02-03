@@ -149,6 +149,8 @@ export function PlayerProvider({ children }: PropsWithChildren) {
   };
 
   async function handleNext() {
+    console.log('==== handle next =====');
+
     const currentIndex = songs?.findIndex((song) => song.id === currentSong?.song?.id);
     const nextIndex = currentIndex === songs.length - 1 ? 0 : currentIndex + 1;
     const nextSong = songs?.[nextIndex];

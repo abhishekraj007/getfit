@@ -21,6 +21,8 @@ export default function WorkoutDetail() {
   const { updatedSelectedWorkout } = useWorktouAtom();
   const translation = useTranslation();
 
+  console.log({ exercises });
+
   return (
     <WhitePage userSelect="none">
       <PageHeader image={workoutDetail?.image} onBack={() => push('/')} />

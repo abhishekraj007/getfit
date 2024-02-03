@@ -1,8 +1,8 @@
-import { FloatingMusicButton } from 'app/components';
 import { Provider } from 'app/provider';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
+import mobileAds from 'react-native-google-mobile-ads';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -28,6 +28,10 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
     }
   }, [loaded]);
+
+  useEffect(() => {
+    mobileAds().initialize();
+  }, []);
 
   if (!loaded) {
     return null;

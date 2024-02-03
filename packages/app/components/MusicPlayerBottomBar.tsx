@@ -45,7 +45,7 @@ export const MusicPlayerBottomBar = () => {
       //   padded
       position="absolute"
       zIndex={100}
-      bottom={-4}
+      bottom={40}
       left={0}
       width={width}
       borderRadius={0}

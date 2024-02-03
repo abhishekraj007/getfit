@@ -3,9 +3,11 @@ import { Music } from '@tamagui/lucide-icons';
 import { Button, View, useWindowDimensions, Image } from '@t4/ui/src';
 import { useRouter } from 'solito/router';
 import { useMusicPlayer } from 'app/provider/player/PlayerProvider';
-import { MotiView } from 'moti';
+import { APP_FEATURES } from 'app/constants';
 
 export function FloatingMusicButton() {
+  const isMusicEnabled = APP_FEATURES.music;
+
   const { push } = useRouter();
   const onClick = async () => {
     push('/playlists');
@@ -15,6 +17,8 @@ export function FloatingMusicButton() {
   const { playbackStatus: { isPlaying } = { isPlaying } } = useMusicPlayer();
 
   // console.log({ isPlaying });
+
+  if (!isMusicEnabled) return undefined;
 
   return (
     <View position="absolute" right={0} top={height / 2}>

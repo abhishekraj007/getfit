@@ -1,4 +1,5 @@
 import {
+  IAssets,
   IBodyPart,
   IChallenge,
   IEquipment,
@@ -142,6 +143,27 @@ export const mapDocumentToSections = (data: DocumentData[]): Sections[] => {
       challengeIds: (challengeIds ?? []).map(({ id }) => id),
     };
   });
+};
+
+export const mapDocumentToAssets = (data: DocumentData[]): IAssets => {
+  const images = data.reduce((acc, item) => {
+    return {
+      ...acc,
+      ...(item?.images ?? {}),
+    };
+  }, {});
+
+  const texts = data.reduce((acc, item) => {
+    return {
+      ...acc,
+      ...(item?.texts_translated ?? {}),
+    };
+  }, {});
+
+  return {
+    images,
+    texts,
+  };
 };
 
 // export const mapDocumentToSongs = (data: DocumentData[]): Track[] => {

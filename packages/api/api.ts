@@ -1,4 +1,5 @@
 import {
+  mapDocumentToAssets,
   mapDocumentToChallenges,
   mapDocumentToEquipment,
   mapDocumentToPlaylists,
@@ -14,7 +15,6 @@ import {
 import { CollectionReference, DocumentData, collection, getDocs } from 'firebase/firestore';
 import { home } from '../mock/home';
 import { workoutsData } from '../mock';
-import { mock_songs } from '../mock/songs';
 import { IPlaylists } from '@t4/ui/src/modals';
 import playlists from '../mock/playlists.json';
 
@@ -25,8 +25,8 @@ const equipmentsCollection = collection(db, 'equipments');
 const homeCollection = collection(db, 'home');
 const workoutsCollection = collection(db, 'workouts');
 const challengesCollection = collection(db, 'challenges');
-const songsCollection = collection(db, 'songs');
 const playlistsCollection = collection(db, 'playlists');
+const assetsCollection = collection(db, 'assets');
 
 const SPOTIFY_API_ENDPOINT = 'https://api.spotify.com/v1';
 
@@ -48,14 +48,12 @@ export const fetchHomeScreen = async (local?) => {
   return mapDocumentToSections(data);
 };
 
-// export const fetchSongs = async (local?) => {
-//   if (local) {
-//     return mock_songs;
-//   }
+export const fetchAssets = async (local?) => {
+  const data = await docFetcher(assetsCollection);
+  const result = mapDocumentToAssets(data);
 
-//   const data = await docFetcher(songsCollection);
-//   return mapDocumentToSongs(data);
-// };
+  return result;
+};
 
 export const fetchPlaylists = async (local?) => {
   if (local) {

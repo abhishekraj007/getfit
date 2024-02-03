@@ -32,10 +32,12 @@ export interface ExerciseTimerProps {
   rightButton?: React.ReactNode;
   onNext: Function;
   onPrev: Function;
+  onComplete: () => void;
 }
 
 export function ExerciseTimer(props: ExerciseTimerProps) {
-  const { exercise, stop, currentPage, lastPage, leftButton, rightButton, onNext, onPrev } = props;
+  const { exercise, stop, currentPage, lastPage, leftButton, rightButton, onNext, onComplete } =
+    props;
 
   const { push } = useRouter();
   const { width, height } = useWindowDimensions();
@@ -57,10 +59,10 @@ export function ExerciseTimer(props: ExerciseTimerProps) {
   const restTime = (rest_unit === 'sec' ? rest_value : rest_value * 60) || 60;
   const shouldShowRepsInSec = reps_unit !== 'rep';
 
-  const refVideo2 = useRef(null);
+  // const refVideo2 = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [nextSet, setnextSet] = useState(false);
-  const [finished, setFinished] = useState(false);
+  const [finished] = useState(false);
   const [isEnd, setIsEnd] = useState(false);
   const [currentReps, setCurrentReps] = useState(reps_value);
   // const [currentReps, setCurrentReps] = useState(1);
@@ -141,13 +143,11 @@ export function ExerciseTimer(props: ExerciseTimerProps) {
       if (sets === currentSets) {
         if (isEnd) {
           setTimeout(() => {
-            push(`/workout/${selectedWorkout}/completed`);
+            onComplete();
           }, 1000);
         } else if (!isEnd) {
           setTimeout(() => {
-            // setFinished(true);
             goToRest();
-            // onNext();
           }, 1000);
         }
       } else {
@@ -173,7 +173,7 @@ export function ExerciseTimer(props: ExerciseTimerProps) {
   const onSkip = () => {
     if (currentSets === sets) {
       if (isEnd) {
-        push(`/workout/${selectedWorkout}/completed`);
+        onComplete();
       } else {
         onNext();
         setShouldTakeRest(false);

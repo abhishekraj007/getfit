@@ -3,13 +3,17 @@ import { createParam } from 'solito';
 import { Spinner, PageSlider, Button, H5, View } from '@t4/ui/src';
 import { useRouter } from 'solito/router';
 import { ExerciseTimer, ExitModal, PageHeader } from 'app/components';
-import { useExercisesByWorkoutId } from 'app/hooks';
+import { useAssets, useExercisesByWorkoutId } from 'app/hooks';
 import { CheckCircle, ChevronLeft, ChevronRight, Music } from '@tamagui/lucide-icons';
 import { WhitePage } from 'app/components/Page';
 import { useTranslation } from 'app/provider/language';
 import { useMusicPlayer } from 'app/provider/player/PlayerProvider';
+import { TestIds, useInterstitialAd } from 'react-native-google-mobile-ads';
+import { AD_IDS, APP_FEATURES } from 'app/constants';
 
 const { useParam } = createParam<{ id: string }>();
+
+const interstitialAdId = __DEV__ ? TestIds.INTERSTITIAL : AD_IDS.INTERTETIAL_WORKOUT_FINISH;
 
 export default function WorkoutPlay() {
   const [workoutId = ''] = useParam('id');
@@ -20,7 +24,8 @@ export default function WorkoutPlay() {
   const [showExitAlert, setShowExitAlert] = useState(false);
   const translation = useTranslation();
   const exercisesLength = exercises?.length || 0;
-  const { isPlayerScreenVisible, setIsPlayerScreenVisible } = useMusicPlayer();
+  const { setIsPlayerScreenVisible } = useMusicPlayer();
+  const isMusicDisabled = !APP_FEATURES.music;
 
   // useEffect(() => {
   //   if (Platform.OS !== 'web') {
@@ -43,6 +48,26 @@ export default function WorkoutPlay() {
   //   }
   // }, []);
 
+  /**
+   * Ads
+   */
+  const { isLoaded, isClosed, load, show, isOpened } = useInterstitialAd(interstitialAdId);
+  // const { isLoaded, isClosed, load, show, isOpened } = useRewardedInterstitialAd(
+  //   TestIds.REWARDED_INTERSTITIAL
+  // );
+  // const { isLoaded, isClosed, load, show, isOpened } = useRewardedAd(TestIds.REWARDED);
+
+  useEffect(() => {
+    // Start loading the interstitial
+    load();
+  }, [load]);
+
+  useEffect(() => {
+    if (isClosed) {
+      push(`/workout/${workoutId}/completed`);
+    }
+  }, [isClosed]);
+
   const leftButton = (onPrev, pageNumber) => {
     const buttonDisabled = pageNumber === 0;
     return (
@@ -64,6 +89,15 @@ export default function WorkoutPlay() {
 
   const finishText = translation?.finish;
 
+  const onComplete = () => {
+    if (isLoaded) {
+      show();
+    } else {
+      // No advert ready to show yet
+      push(`/workout/${workoutId}/completed`);
+    }
+  };
+
   const rightButton = (onNext, pageNumber) => {
     const isLastExercise = pageNumber === exercises.length - 1;
     return (
@@ -77,7 +111,7 @@ export default function WorkoutPlay() {
           setIsPlaying(false);
 
           if (isLastExercise) {
-            push(`/workout/${workoutId}/completed`);
+            onComplete();
           } else {
             onNext();
           }
@@ -101,7 +135,26 @@ export default function WorkoutPlay() {
         rightButton={rightButton(onNext, pageNumber)}
         onNext={onNext}
         onPrev={onPrev}
+        onComplete={onComplete}
       />
+    );
+  };
+
+  const renderMusicButton = () => {
+    if (isMusicDisabled) return null;
+
+    return (
+      <View>
+        <Button
+          icon={<Music size={'$1'} />}
+          unstyled
+          chromeless
+          onPress={() => {
+            setIsPlayerScreenVisible(true);
+            push(`/playlists`);
+          }}
+        ></Button>
+      </View>
     );
   };
 
@@ -111,19 +164,7 @@ export default function WorkoutPlay() {
         onBack={() => {
           setShowExitAlert(true);
         }}
-        rightContent={
-          <View>
-            <Button
-              icon={<Music size={'$1'} />}
-              unstyled
-              chromeless
-              onPress={() => {
-                setIsPlayerScreenVisible(true);
-                push(`/music`);
-              }}
-            ></Button>
-          </View>
-        }
+        rightContent={renderMusicButton()}
       ></PageHeader>
 
       {showExitAlert && (
@@ -134,7 +175,11 @@ export default function WorkoutPlay() {
         />
       )}
 
-      {isLoading ? <Spinner /> : <PageSlider data={exercises} renderItem={renderItem} />}
+      {isLoading || isOpened ? (
+        <Spinner />
+      ) : (
+        <PageSlider data={exercises} renderItem={renderItem} />
+      )}
     </WhitePage>
   );
 }

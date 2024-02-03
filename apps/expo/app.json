@@ -1,9 +1,9 @@
 {
   "expo": {
     "name": "Body Fitness",
-    "slug": "bodyfitness",
+    "slug": "bodyfitnessapp",
     "scheme": "bodyfitnessapp",
-    "version": "1.0.0",
+    "version": "3.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -33,7 +33,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.akrj.bodyfitnessapp"
+      "package": "com.akrj.bodyfitnessapp",
+      "versionCode": 3
     },
     "extra": {
       "eas": {
@@ -46,5 +47,9 @@
       "tsconfigPaths": true,
       "typedRoutes": true
     }
+  },
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-6695906984875280~2291755254",
+    "ios_app_id": "ca-app-pub-xxxxxxxx~xxxxxxxx"
   }
 }

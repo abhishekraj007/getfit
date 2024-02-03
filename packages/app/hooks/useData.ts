@@ -1,4 +1,5 @@
 import {
+  fetchAssets,
   fetchChallenges,
   fetchExercises,
   fetchHomeScreen,
@@ -14,6 +15,8 @@ import { getObjectFromArray } from 'app/utils/transformer';
 const refetchCondition = {
   refetchOnMount: false,
   refetchOnWindowFocus: false,
+  retry: 3,
+
   // staleTime: 1000,
 };
 
@@ -21,6 +24,14 @@ export const useHomeScreen = () => {
   return useQuery({
     queryKey: ['home'],
     queryFn: () => fetchHomeScreen(),
+    ...refetchCondition,
+  });
+};
+
+export const useAssets = () => {
+  return useQuery({
+    queryKey: ['assets'],
+    queryFn: () => fetchAssets(),
     ...refetchCondition,
   });
 };

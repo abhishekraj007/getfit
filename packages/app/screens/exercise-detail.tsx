@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { createParam } from 'solito';
-import { Spinner, PageSlider, Button, H5, WorkoutDetailLoader, YStack, H3 } from '@t4/ui/src';
+import { WorkoutDetailLoader, YStack } from '@t4/ui/src';
 import { useRouter } from 'solito/router';
-import { ExerciseDetail, ExerciseTimer, ExitModal, PageHeader } from 'app/components';
-import { useAllExercises, useExercisesByWorkoutId } from 'app/hooks';
-import { CheckCircle, ChevronLeft, ChevronRight } from '@tamagui/lucide-icons';
+import { ExerciseDetail, PageHeader } from 'app/components';
+import { useAllExercises } from 'app/hooks';
 import { WhitePage } from 'app/components/Page';
 import { IExercise } from '@t4/ui/src/modals';
 import { useLanguage } from 'app/provider/language';
@@ -29,7 +28,7 @@ export default function WorkoutPlay() {
         <WorkoutDetailLoader />
       ) : (
         <YStack>
-          <ExerciseDetail exercise={exercise} hideImage />
+          <ExerciseDetail lang={lang} exercise={exercise} hideImage />
         </YStack>
       )}
     </WhitePage>
