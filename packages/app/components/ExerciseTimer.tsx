@@ -383,7 +383,7 @@ export function ExerciseTimer(props: ExerciseTimerProps) {
       {showRest && renderRest()}
       {!finished && renderBottomActions()}
       {showDetail && (
-        <CustomSheet open={showDetail} onOpenChange={setShowDetail} scrollView={false}>
+        <CustomSheet open={showDetail} onOpenChange={setShowDetail}>
           <ExerciseDetail exercise={exercise} lang={lang} />
         </CustomSheet>
       )}

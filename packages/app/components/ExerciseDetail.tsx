@@ -1,17 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { IExercise } from '@t4/ui/src/modals';
-import { LanguageContext, useLanguage } from 'app/provider/language';
 import { useColors } from 'app/hooks';
-import {
-  H5,
-  Image,
-  ImageBackground,
-  Paragraph,
-  ScrollView,
-  YStack,
-  useWindowDimensions,
-} from '@t4/ui/src';
+import { H5, Paragraph, ScrollView, View, YStack, useWindowDimensions } from '@t4/ui/src';
 import { SolitoImage } from 'solito/image';
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
+import { AD_IDS } from 'app/constants';
+
+const adIdHomeBanner = __DEV__ ? TestIds.BANNER : AD_IDS.BANNER_EXERCISE_DETAIL_SCREEN;
 
 export function ExerciseDetail({
   exercise,
@@ -22,7 +17,7 @@ export function ExerciseDetail({
   hideImage?: boolean;
   lang: string;
 }) {
-  const { textPrimary, backgroundColor } = useColors();
+  const { textPrimary } = useColors();
   const { width } = useWindowDimensions();
 
   const { title, title_translated, image, instructions, instructions_translated } = exercise;
@@ -57,9 +52,18 @@ export function ExerciseDetail({
         <H5 userSelect="none" color={textPrimary} marginBottom={'$3'}>
           {title_translated?.[lang] ?? title}
         </H5>
-
         <ScrollView>
           <Paragraph userSelect="none">{instructions_translated?.[lang] ?? instructions}</Paragraph>
+
+          <View marginTop={16}>
+            <BannerAd
+              size={BannerAdSize.MEDIUM_RECTANGLE}
+              unitId={adIdHomeBanner}
+              requestOptions={{
+                requestNonPersonalizedAdsOnly: true,
+              }}
+            />
+          </View>
         </ScrollView>
       </YStack>
     </YStack>

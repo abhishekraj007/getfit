@@ -22,7 +22,7 @@
       "channel": "production",
       "distribution": "store",
       "android": {
-        "buildType": "apk",
+        "buildType": "app-bundle",
         "node": "20.10.0"
       },
       "ios": {

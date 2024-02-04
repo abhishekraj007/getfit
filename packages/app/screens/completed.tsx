@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { createParam } from 'solito';
-import { Button, YStack, XStack, useWindowDimensions, H2, ImageBackground, H3 } from '@t4/ui/src';
+import { Button, YStack, XStack, useWindowDimensions, ImageBackground, H5 } from '@t4/ui/src';
 import { useRouter } from 'solito/router';
 import { Home, RotateCcw, X } from '@tamagui/lucide-icons';
 import { CONGRATULATION_IMAGE } from 'app/constants/images';
@@ -71,7 +71,7 @@ export default function Completed() {
               alt="congrates"
               unoptimized
             />
-            <H2> {texts?.congratulation_title?.[lang] ?? ''}</H2>
+            <H5 fontSize={20}> {texts?.congratulation_title?.[lang] ?? ''}</H5>
             <XStack space marginTop={80}>
               <Button
                 size={'$5'}

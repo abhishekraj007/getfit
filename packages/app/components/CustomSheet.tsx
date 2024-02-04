@@ -35,18 +35,17 @@ export const CustomSheet = ({
     }
   }, []);
 
-
   const [localOpen, setLocalOpen] = useState(false);
 
   useEffect(() => {
-     const timer = setTimeout(() => {
+    const timer = setTimeout(() => {
       setLocalOpen(open);
-    }, SHEET_DELAY)
+    }, SHEET_DELAY);
 
     return () => {
       timer && clearTimeout(timer);
-    }
-  }, [open])
+    };
+  }, [open]);
 
   return (
     <Sheet
@@ -57,8 +56,7 @@ export const CustomSheet = ({
       onOpenChange={(open) => {
         setTimeout(() => {
           onOpenChange && onOpenChange(open);
-        }, SHEET_DELAY)
-    
+        }, SHEET_DELAY);
       }}
       dismissOnSnapToBottom
       animation="medium"

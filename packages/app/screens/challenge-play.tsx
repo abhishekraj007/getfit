@@ -76,6 +76,9 @@ export default function ChallengePlay() {
         totalItems={exercisesLength}
         leftButton={leftButton(onPrev, pageNumber)}
         rightButton={rightButton(onNext, pageNumber)}
+        onComplete={() => {}}
+        onNext={() => {}}
+        onPrev={() => {}}
       />
     );
   };

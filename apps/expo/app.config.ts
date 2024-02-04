@@ -7,7 +7,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   extra: {
     eas: {
-      projectId: process.env.EAS_PROJECT_ID || 'f78014ac-1a0e-4873-bbed-2021236b988d',
+      projectId: process.env.EAS_PROJECT_ID || 'eas-project-id',
     },
   },
   owner: process.env.EAS_OWNER || 'akrj21896',

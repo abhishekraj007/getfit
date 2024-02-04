@@ -87,7 +87,13 @@ export function HomeScreen() {
             </ScrollView>
           )}
         </YStack>
-        <BannerAd size={BannerAdSize.FULL_BANNER} unitId={adIdHomeBanner} />
+        <BannerAd
+          size={BannerAdSize.FULL_BANNER}
+          unitId={adIdHomeBanner}
+          requestOptions={{
+            requestNonPersonalizedAdsOnly: true,
+          }}
+        />
       </YStack>
     </SafeAreaView>
   );

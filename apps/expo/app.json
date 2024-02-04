@@ -3,7 +3,7 @@
     "name": "Body Fitness",
     "slug": "bodyfitnessapp",
     "scheme": "bodyfitnessapp",
-    "version": "3.0.0",
+    "version": "4.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -34,12 +34,8 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.akrj.bodyfitnessapp",
-      "versionCode": 3
-    },
-    "extra": {
-      "eas": {
-        "projectId": "f78014ac-1a0e-4873-bbed-2021236b988d"
-      }
+      "versionCode": 4,
+      "permissions": ["com.google.android.gms.permission.AD_ID"]
     },
     "owner": "akrj21896",
     "plugins": ["expo-router"],

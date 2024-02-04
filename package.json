@@ -17,6 +17,7 @@
     "build:web": "turbo run build --filter=next-app",
     "build:ios": "cd apps/expo && pnpm build:ios",
     "build:android": "cd apps/expo && pnpm build:android",
+    "build:android:dev": "cd apps/expo && pnpm build:android:dev",
     "build:ios:preview": "cd apps/expo && pnpm build:ios:preview",
     "build:android:preview": "cd apps/expo && pnpm build:android:preview",
     "submit:android": "cd apps/expo && eas submit --platform android --path ./app-release.aab",
