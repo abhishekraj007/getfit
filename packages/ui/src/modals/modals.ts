@@ -1,3 +1,8 @@
+export enum Gender {
+  FEMALE = 'female',
+  MALE = 'male',
+}
+
 export interface IWorkoutExerciseItem {
   rest_unit: 'sec' | 'min';
   sets: number;

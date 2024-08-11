@@ -45,8 +45,6 @@ export const CustomModal = ({ title, children, open, onOpenChange }: CustomModal
           </Dialog.Title>
         )}
         <Dialog.Description> {children} </Dialog.Description>
-
-        {/* ... */}
       </Dialog.Content>
     </Dialog.Portal>
   </Dialog>

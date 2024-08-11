@@ -3,7 +3,7 @@ import { useTheme, useThemeName } from '@t4/ui/src';
 export const useColors = () => {
   const themeName = useThemeName();
   const theme = useTheme();
-  const backgroundColor = themeName.includes('dark') ? '$background' : 'white';
+  const backgroundColor = themeName.includes('dark') ? '$gray1' : 'white';
   const headerColor = themeName.includes('dark') ? 'white' : theme.gray12;
   const textPrimary = themeName.includes('dark') ? 'white' : theme.gray12;
   const textSecondary = themeName.includes('dark') ? 'white' : theme.gray10;

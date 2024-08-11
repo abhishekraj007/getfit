@@ -4,12 +4,15 @@ import { YStack, Card, Paragraph, XStack, H5, useWindowDimensions } from '@t4/ui
 import { LIST_MISSING_IMAGE } from 'app/constants/images';
 import { useColors } from 'app/hooks';
 import { useLanguage } from 'app/provider/language';
+import { CustomSheet } from './CustomSheet';
+import { ExerciseDetail } from './ExerciseDetail';
+import { useState } from 'react';
 
 export function ExerciseCard({ item }: { item: IExercise }) {
   const { width } = useWindowDimensions();
   const { backgroundColor, textPrimary, textSecondary } = useColors();
   const { lang } = useLanguage();
-  // const [showDetail, setShowDetail] = useState(false);
+  const [showDetail, setShowDetail] = useState(false);
   // const { push } = useRouter();
 
   return (
@@ -22,8 +25,9 @@ export function ExerciseCard({ item }: { item: IExercise }) {
       pressStyle={{ scale: 0.96, opacity: 0.9 }}
       exitStyle={{ scale: 1, opacity: 1 }}
       backgroundColor={backgroundColor}
+      // opacity={1}
       // onPress={() => push(`/exercise/${item.id}`)}
-      // onPress={() => setShowDetail(true)}
+      onPress={() => setShowDetail(true)}
     >
       <XStack alignItems="center">
         <SolitoImage
@@ -44,11 +48,11 @@ export function ExerciseCard({ item }: { item: IExercise }) {
         </YStack>
       </XStack>
 
-      {/* {showDetail && (
-          <CustomSheet open={showDetail} onOpenChange={setShowDetail} scrollView={false}>
-            <ExerciseDetail exercise={item} lang={lang} />
-          </CustomSheet>
-        )} */}
+      {showDetail && (
+        <CustomSheet open={showDetail} onOpenChange={setShowDetail}>
+          <ExerciseDetail exercise={item} lang={lang} />
+        </CustomSheet>
+      )}
     </Card>
   );
 }

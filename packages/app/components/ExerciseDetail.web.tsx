@@ -3,10 +3,10 @@ import { IExercise } from '@t4/ui/src/modals';
 import { useColors } from 'app/hooks';
 import { H5, Paragraph, ScrollView, View, YStack, useWindowDimensions } from '@t4/ui/src';
 import { SolitoImage } from 'solito/image';
-import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
-import { AD_IDS } from 'app/constants';
+// import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
+// import { AD_IDS } from 'app/constants';
 
-const adIdHomeBanner = __DEV__ ? TestIds.BANNER : AD_IDS.BANNER_EXERCISE_DETAIL_SCREEN;
+// const adIdHomeBanner = __DEV__ ? TestIds.BANNER : AD_IDS.BANNER_EXERCISE_DETAIL_SCREEN;
 
 export function ExerciseDetail({
   exercise,
@@ -48,7 +48,7 @@ export function ExerciseDetail({
         <ScrollView>
           <Paragraph userSelect="none">{instructions_translated?.[lang] ?? instructions}</Paragraph>
 
-          <View marginTop={16}>
+          {/* <View marginTop={16}>
             <BannerAd
               size={BannerAdSize.MEDIUM_RECTANGLE}
               unitId={adIdHomeBanner}
@@ -56,7 +56,7 @@ export function ExerciseDetail({
               //   requestNonPersonalizedAdsOnly: true,
               // }}
             />
-          </View>
+          </View> */}
         </ScrollView>
       </YStack>
     </YStack>

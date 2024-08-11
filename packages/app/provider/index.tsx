@@ -4,7 +4,7 @@ import { ToastViewport } from './toast-viewport';
 import { SafeAreaProvider } from './safe-area';
 import { TamaguiThemeProvider } from './theme';
 import { SolitoImageProvider } from './solito-image';
-import { MyQueryClientProvider } from './react-query/indes';
+import { MyQueryClientProvider } from './react-query';
 import { LanguageProvider } from './language';
 import { PlayerProvider } from './player/PlayerProvider';
 // import { Session } from '@supabase/supabase-js'

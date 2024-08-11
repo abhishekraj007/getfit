@@ -12,16 +12,25 @@ import {
   mapDocumentToExercise,
   mapDocumentToLevel,
 } from 'app/utils/transformer';
-import { CollectionReference, DocumentData, collection, getDocs } from 'firebase/firestore';
+import {
+  CollectionReference,
+  DocumentData,
+  collection,
+  getDocs,
+  query,
+  where,
+} from 'firebase/firestore';
 import { home } from '../mock/home';
 import { workoutsData } from '../mock';
-import { IPlaylists } from '@t4/ui/src/modals';
+import { IPlaylists, Gender } from '@t4/ui/src/modals';
 import playlists from '../mock/playlists.json';
 
 const exerciseCollection = collection(db, 'exercises');
 const levelsCollection = collection(db, 'levels');
 const bodyPartsCollection = collection(db, 'bodyparts');
 const equipmentsCollection = collection(db, 'equipments');
+// const homeCollection = collection(db, 'home').where("gender", "array-contains", "male")
+
 const homeCollection = collection(db, 'home');
 const workoutsCollection = collection(db, 'workouts');
 const challengesCollection = collection(db, 'challenges');
@@ -39,12 +48,39 @@ export const docFetcher = async (collection: CollectionReference<DocumentData, D
   return data;
 };
 
-export const fetchHomeScreen = async (local?) => {
+export const docFetcherByParams = async (
+  collection: CollectionReference<DocumentData, DocumentData>,
+  gender: Gender | null
+) => {
+  const data: DocumentData[] = [];
+
+  console.log('=====docFetcherBy===', gender);
+
+  const eventsQuery = query(collection, where('gender', '==', gender));
+
+  const docs = await getDocs(eventsQuery);
+
+  docs.forEach((doc) => {
+    data.push({ id: doc.id, ...doc.data() });
+  });
+
+  // console.log({ data });
+
+  return data;
+};
+
+export interface ApiParams {
+  gender: Gender | null;
+  local?: boolean;
+}
+
+export const fetchHomeScreen = async ({ local, gender }: ApiParams) => {
   if (local) {
     return home;
   }
 
-  const data = await docFetcher(homeCollection);
+  const data = await docFetcherByParams(homeCollection, gender);
+
   return mapDocumentToSections(data);
 };
 
@@ -64,11 +100,13 @@ export const fetchPlaylists = async (local?) => {
   return mapDocumentToPlaylists(data);
 };
 
-export const fetchWorkouts = async (local?) => {
+export const fetchWorkouts = async ({ local, gender }: ApiParams) => {
   if (local) {
     return workoutsData;
   }
-  const data = await docFetcher(workoutsCollection);
+  // const data = await docFetcher(workoutsCollection);
+
+  const data = await docFetcherByParams(workoutsCollection, gender);
   return mapDocumentToWorkout(data);
 };
 

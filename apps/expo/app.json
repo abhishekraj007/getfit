@@ -3,7 +3,7 @@
     "name": "Body Fitness",
     "slug": "bodyfitnessapp",
     "scheme": "bodyfitnessapp",
-    "version": "4.0.0",
+    "version": "8.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -34,7 +34,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.akrj.bodyfitnessapp",
-      "versionCode": 4,
+      "versionCode": 8,
       "permissions": ["com.google.android.gms.permission.AD_ID"]
     },
     "owner": "akrj21896",
@@ -46,6 +46,7 @@
   },
   "react-native-google-mobile-ads": {
     "android_app_id": "ca-app-pub-6695906984875280~2291755254",
-    "ios_app_id": "ca-app-pub-xxxxxxxx~xxxxxxxx"
+    "ios_app_id": "ca-app-pub-xxxxxxxx~xxxxxxxx",
+    "delay_app_measurement_init": true
   }
 }

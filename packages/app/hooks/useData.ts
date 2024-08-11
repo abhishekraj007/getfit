@@ -1,31 +1,58 @@
+import { workoutsData } from './../../mock/workouts';
 import {
   fetchAssets,
   fetchChallenges,
   fetchExercises,
   fetchHomeScreen,
   fetchPlaylists,
-  fetchUserPlaylist,
-  fetchUserProfile,
+  // fetchUserPlaylist,
+  // fetchUserProfile,
   fetchWorkouts,
 } from '@t4/api/index';
 import { IExercise, IWorkout, ListType, Sections } from '@t4/ui/src/modals';
 import { useQuery } from '@tanstack/react-query';
 import { getObjectFromArray } from 'app/utils/transformer';
-
+import { useGender } from './useGender';
 const refetchCondition = {
   refetchOnMount: false,
   refetchOnWindowFocus: false,
   retry: 3,
-
   // staleTime: 1000,
 };
 
 export const useHomeScreen = () => {
+  const { gender } = useGender();
+
   return useQuery({
-    queryKey: ['home'],
-    queryFn: () => fetchHomeScreen(),
+    queryKey: ['home', gender],
+    queryFn: () =>
+      fetchHomeScreen({
+        gender,
+      }),
+    enabled: !!gender,
     ...refetchCondition,
   });
+};
+
+export const useAllWorkouts = () => {
+  const { gender } = useGender();
+
+  const query = useQuery({
+    queryKey: ['workouts', gender],
+    queryFn: () =>
+      fetchWorkouts({
+        gender,
+      }),
+    enabled: !!gender,
+    ...refetchCondition,
+  });
+
+  const workoutsMap = getObjectFromArray(query.data);
+
+  return {
+    ...query,
+    workoutsMap,
+  };
 };
 
 export const useAssets = () => {
@@ -50,21 +77,6 @@ export const usePlaylists = (local?) => {
     queryFn: () => fetchPlaylists(local),
     ...refetchCondition,
   });
-};
-
-export const useAllWorkouts = () => {
-  const query = useQuery({
-    queryKey: ['workouts'],
-    queryFn: () => fetchWorkouts(),
-    ...refetchCondition,
-  });
-
-  const workoutsMap = getObjectFromArray(query.data);
-
-  return {
-    ...query,
-    workoutsMap,
-  };
 };
 
 export const useAllChallenges = () => {
@@ -98,24 +110,33 @@ export const useAllExercises = () => {
 };
 
 export const useSections = () => {
+  const { gender } = useGender();
+
   const {
     isLoading: isHomeScreenLoading,
     data: homeSections,
     isError: isHomeScreenError,
     refetch: homeRefetch,
+    isSuccess: isHomeScreenSuccess,
+    isRefetchError: isHomeRefechError,
+    isRefetching: isHomeRefetching,
   } = useHomeScreen();
   const {
     isLoading: isWorkoutLoading,
     workoutsMap,
     isError: isWorkoutsError,
     refetch: workoutRefetch,
+    isSuccess: isWorkoutSuccess,
+    isRefetchError: isWorkoutRefechError,
+    isRefetching: isWorkingRefetching,
   } = useAllWorkouts();
-  const {
-    isLoading: isChallengesLoading,
-    challengesMap,
-    isError: isChallengesError,
-    refetch: challengeRefetch,
-  } = useAllChallenges();
+  // const {
+  //   isLoading: isChallengesLoading,
+  //   challengesMap,
+  //   isError: isChallengesError,
+  //   refetch: challengeRefetch,
+  //   isSuccess: isChallengeSuccess
+  // } = useAllChallenges();
 
   const sections = homeSections?.map((section: Sections) => {
     const { id, name, workoutIds, challengeIds, name_translated } = section;
@@ -126,20 +147,30 @@ export const useSections = () => {
       name_translated,
       type: workoutIds?.length ? ListType.workout : ListType.challenge,
       workouts: workoutIds?.map((id) => workoutsMap[id]),
-      challenges: challengeIds?.map((id) => challengesMap[id]),
+      // challenges: challengeIds?.map((id) => challengesMap[id]),
+      challenges: [],
     };
   });
 
   const refetch = () => {
+    console.log('refethicng....');
     homeRefetch();
     workoutRefetch();
-    challengeRefetch();
+    // challengeRefetch();
   };
 
+  const isLoading =
+    isHomeScreenLoading || isWorkoutLoading || isHomeRefetching || isWorkingRefetching;
+
+  const isError = isHomeScreenError || isWorkoutsError || isHomeRefechError || isWorkoutRefechError;
+
+  console.log({ sections, homeSections });
+
   return {
-    isLoading: isHomeScreenLoading || isWorkoutLoading || isChallengesLoading,
+    isLoading,
     sections,
-    isError: isHomeScreenError || isWorkoutsError || isChallengesError,
+    isError,
+    isSuccess: isHomeScreenSuccess && isWorkoutSuccess,
     refetch,
   };
 };

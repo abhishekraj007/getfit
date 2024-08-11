@@ -2,7 +2,6 @@ import { IExercise } from '@t4/ui/src/modals';
 import { YStack, XStack, useWindowDimensions, Button, ScrollView } from '@t4/ui/src';
 import { useTranslation } from 'app/provider/language';
 import { ExerciseCard } from './ExerciseCard';
-
 export function Exercises({ exercises, onStart }: { exercises: IExercise[]; onStart }) {
   const { height } = useWindowDimensions();
   const translation = useTranslation();
@@ -20,7 +19,7 @@ export function Exercises({ exercises, onStart }: { exercises: IExercise[]; onSt
           size="$6"
           themeInverse
           width={280}
-          pressStyle={{ scale: 0.96, opacity: 0.9 }}
+          // pressStyle={{ scale: 0.96, opacity: 0.9 }}
           onPress={onStart}
           borderRadius={50}
         >

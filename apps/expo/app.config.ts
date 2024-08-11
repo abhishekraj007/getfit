@@ -11,7 +11,17 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
   },
   owner: process.env.EAS_OWNER || 'akrj21896',
-  plugins: ['expo-router'],
+  plugins: [
+    'expo-router',
+    [
+      'expo-build-properties',
+      {
+        android: {
+          extraProguardRules: '-keep class com.google.android.gms.internal.consent_sdk.** { *; }',
+        },
+      },
+    ],
+  ],
   experiments: {
     tsconfigPaths: true,
     typedRoutes: true,

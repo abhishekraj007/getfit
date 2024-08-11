@@ -18,7 +18,7 @@ export function useAppTheme() {
     if (!appTheme) {
       checkTheme();
     }
-  }, []);
+  }, [appTheme]);
 
   const setAppTheme = (theme: ThemeVariant) => {
     setAppThemeLocal(theme);

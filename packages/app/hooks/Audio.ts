@@ -1,4 +1,3 @@
-import { useMusicPlayer } from 'app/provider/player/PlayerProvider';
 import { Audio } from 'expo-av';
 
 interface Configs {

@@ -40,9 +40,7 @@ export function MusicImage({
       )}
 
       <View position="absolute" left={10} top={10}>
-        {isPlaying && !isBuffering && (
-          <Image source={require('../../../assets/music_playing.gif')} width={20} height={20} />
-        )}
+        {/* {isPlaying && !isBuffering && <Image source={musicPlayingGif} width={20} height={20} />} */}
 
         {isBuffering && <Spinner size="small" />}
       </View>

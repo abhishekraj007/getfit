@@ -15,7 +15,7 @@
     "@supabase/auth-helpers-nextjs": "^0.8.1",
     "@supabase/auth-helpers-react": "^0.4.2",
     "@t4/ui": "^2.0.0",
-    "@tamagui/next-theme": "1.79.11",
+    "@tamagui/next-theme": "1.108.2",
     "@tsndr/cloudflare-worker-jwt": "^2.2.2",
     "app": "^2.0.0",
     "million": "2.6.2",
@@ -23,11 +23,11 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-native": "^0.72.5",
-    "react-native-web-lite": "1.79.11",
+    "react-native-web-lite": "1.108.2",
     "webpack": "^5.88.2"
   },
   "devDependencies": {
-    "@tamagui/next-plugin": "1.79.11",
+    "@tamagui/next-plugin": "1.108.2",
     "@types/node": "^20.7.1",
     "@types/react": "^18.2.23",
     "dotenv-cli": "^7.3.0",
